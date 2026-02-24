@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../utils/api';
+import api, { getImageUrl } from '../utils/api';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 
 const Skills = () => {
@@ -76,7 +76,7 @@ const Skills = () => {
                     <div key={skill._id} className="bg-white p-6 rounded-xl shadow-sm flex items-center justify-between border border-gray-100">
                         <div className="flex items-center w-full min-w-0 mr-4">
                             {skill.icon ? (
-                                <img src={`http://localhost:5000${skill.icon}`} alt="" className="w-12 h-12 object-contain mr-4 flex-shrink-0" />
+                                <img src={getImageUrl(skill.icon)} alt="" className="w-12 h-12 object-contain mr-4 flex-shrink-0" />
                             ) : (
                                 <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mr-4 font-bold text-xl flex-shrink-0">{skill.name.charAt(0)}</div>
                             )}

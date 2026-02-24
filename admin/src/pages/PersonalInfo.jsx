@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../utils/api';
+import api, { getImageUrl } from '../utils/api';
 import { FaSave, FaUserCircle } from 'react-icons/fa';
 
 const PersonalInfo = () => {
@@ -75,7 +75,7 @@ const PersonalInfo = () => {
                     <div className="p-8 border-b border-gray-100 flex items-center space-x-6">
                         <div className="relative">
                             {currentInfo.profileImage ? (
-                                <img src={`http://localhost:5000${currentInfo.profileImage}`} alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-gray-50" />
+                                <img src={getImageUrl(currentInfo.profileImage)} alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-gray-50" />
                             ) : (
                                 <FaUserCircle className="w-24 h-24 text-gray-300 bg-gray-50 rounded-full" />
                             )}
@@ -151,7 +151,7 @@ const PersonalInfo = () => {
                                 </div>
                                 {currentInfo.resumeLink && (
                                     <div className="text-sm">
-                                        <a href={`http://localhost:5000${currentInfo.resumeLink}`} target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-800 font-medium">View Current Resume</a>
+                                        <a href={getImageUrl(currentInfo.resumeLink)} target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-800 font-medium">View Current Resume</a>
                                     </div>
                                 )}
                             </div>

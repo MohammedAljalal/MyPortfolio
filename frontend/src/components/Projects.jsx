@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import api from '../utils/api';
+import api, { getImageUrl } from '../utils/api';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 const Projects = () => {
@@ -92,7 +92,7 @@ const Projects = () => {
                                     </div>
                                 </div>
                                 {project.image ? (
-                                    <img src={`http://localhost:5000${project.image}`} alt={project.title} className="w-full h-full object-cover rounded-2xl shadow-md transform group-hover:scale-110 transition-transform duration-700" />
+                                    <img src={getImageUrl(project.image)} alt={project.title} className="w-full h-full object-cover rounded-2xl shadow-md transform group-hover:scale-110 transition-transform duration-700" />
                                 ) : (
                                     <div className="w-full h-full bg-gradient-to-br from-indigo-200 to-purple-200 dark:from-slate-700 dark:to-slate-600 rounded-2xl shadow-md flex items-center justify-center text-primary dark:text-gray-300 text-7xl font-black">
                                         {project.title.charAt(0)}

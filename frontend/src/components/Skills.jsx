@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import api from '../utils/api';
+import api, { getImageUrl } from '../utils/api';
 
 const Skills = () => {
     const [skills, setSkills] = useState([]);
@@ -69,7 +69,7 @@ const Skills = () => {
                             {/* Icon Container */}
                             <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 bg-gray-50 dark:bg-slate-800/80 rounded-[1.5rem] flex items-center justify-center p-3.5 md:p-4 mr-6 md:mr-8 border border-gray-100 dark:border-gray-700 group-hover:bg-primary/5 group-hover:border-primary/20 transition-colors duration-500 z-10">
                                 {skill.icon ? (
-                                    <img src={`http://localhost:5000${skill.icon}`} alt={skill.name} className="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" />
+                                    <img src={getImageUrl(skill.icon)} alt={skill.name} className="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" />
                                 ) : (
                                     <span className="text-2xl font-black text-gray-300 dark:text-gray-500 group-hover:text-primary transition-colors duration-500">{skill.name.substring(0, 2).toUpperCase()}</span>
                                 )}

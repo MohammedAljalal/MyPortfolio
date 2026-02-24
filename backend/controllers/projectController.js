@@ -21,7 +21,7 @@ const createProject = async (req, res, next) => {
         let image = '';
 
         if (req.file) {
-            image = `/uploads/${req.file.filename}`;
+            image = req.file.path;
         }
 
         const project = await Project.create({
@@ -67,7 +67,7 @@ const updateProject = async (req, res, next) => {
         Object.keys(updatedFields).forEach(key => updatedFields[key] === undefined && delete updatedFields[key]);
 
         if (req.file) {
-            updatedFields.image = `/uploads/${req.file.filename}`;
+            updatedFields.image = req.file.path;
         }
 
         const updatedProject = await Project.findByIdAndUpdate(

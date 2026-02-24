@@ -1,19 +1,38 @@
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 const path = require('path');
-const fs = require('fs');
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
-}
+// Configure Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename(req, file, cb) {
-        cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: async (req, file) => {
+        let folder = 'mern-portfolio';
+        let resource_type = 'auto'; // Important for PDF files
+
+        const isRawFile = file.mimetype === 'application/pdf' ||
+            file.mimetype === 'application/msword' ||
+            file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
+        if (isRawFile) {
+            folder = 'mern-portfolio/documents';
+            resource_type = 'raw';
+        } else {
+            folder = 'mern-portfolio/images';
+            resource_type = 'image';
+        }
+
+        return {
+            folder: folder,
+            resource_type: resource_type,
+            public_id: `${file.fieldname}-${Date.now()}`
+        };
     },
 });
 
@@ -25,7 +44,7 @@ function checkFileType(file, cb) {
     if (extname && mimetype) {
         return cb(null, true);
     } else {
-        cb('Images only!');
+        cb('Images and Documents only!');
     }
 }
 
