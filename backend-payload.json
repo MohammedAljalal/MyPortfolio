@@ -1,0 +1,35 @@
+{
+    "type": "web_service",
+    "name": "mern-portfolio-backend",
+    "ownerId": "usr-cuurhd4s1fhc73ebf6vg",
+    "repo": "https://github.com/MohammedAljalal/MyPortfolio",
+    "branch": "main",
+    "env": "node",
+    "serviceDetails": {
+        "buildCommand": "npm install",
+        "startCommand": "npm start",
+        "rootDir": "backend",
+        "envVars": [
+            {
+                "key": "MONGO_URI",
+                "value": "mongodb+srv://mohammedalgalalalgalal8_db_user:R1pWKvuz55ZpoCFD@cluster0.fd1nezo.mongodb.net/mern-portfolio"
+            },
+            {
+                "key": "JWT_SECRET",
+                "value": "supersecretportfoliojwtkey_change_in_production"
+            },
+            {
+                "key": "CLOUDINARY_CLOUD_NAME",
+                "value": "portfolio"
+            },
+            {
+                "key": "CLOUDINARY_API_KEY",
+                "value": "851337949439289"
+            },
+            {
+                "key": "CLOUDINARY_API_SECRET",
+                "value": "_w9EicGwQGWE1sn9zlvJPIweFhI"
+            }
+        ]
+    }
+}
