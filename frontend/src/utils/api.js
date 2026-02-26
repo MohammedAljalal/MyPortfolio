@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const SERVER_URL = import.meta.env.VITE_API_URL
     ? import.meta.env.VITE_API_URL.replace('/api', '')
-    : 'http://localhost:5000';
+    : 'https://myportfolio-012f.onrender.com';
 
 export const getImageUrl = (url) => {
     if (!url) return '';
@@ -11,7 +11,7 @@ export const getImageUrl = (url) => {
 };
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+    baseURL: import.meta.env.VITE_API_URL || 'https://myportfolio-012f.onrender.com/api',
 });
 
 // Add a request interceptor

@@ -3,6 +3,17 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaEnvelope, FaChevronDown, FaExternalLinkAlt, FaPhoneAlt, FaWhatsapp } from 'react-icons/fa';
 import api, { getImageUrl } from '../utils/api';
 
+const SocialIcon = ({ href, icon }) => (
+    <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-darkCard text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all transform hover:-translate-y-1 shadow-sm border border-gray-200 dark:border-gray-700"
+    >
+        {icon}
+    </a>
+);
+
 const Hero = () => {
     const [info, setInfo] = useState({});
 
