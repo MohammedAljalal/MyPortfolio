@@ -7,7 +7,6 @@ dotenv.config();
 
 // Connect DB
 const connectDB = require('./config/db');
-connectDB();
 
 // Load models
 const Admin = require('./models/adminModel');
@@ -18,6 +17,7 @@ const Experience = require('./models/experienceModel');
 
 const importData = async () => {
     try {
+        await connectDB();
         await Admin.deleteMany();
         await PersonalInfo.deleteMany();
         await Project.deleteMany();
@@ -47,14 +47,58 @@ const importData = async () => {
         });
 
         // Create Sample Projects
-        await Project.create({
-            title: 'E-commerce Platform',
-            description: 'A full-featured e-commerce platform with payment integration.',
-            technologies: ['React', 'Node.js', 'MongoDB', 'Redux', 'Stripe'],
-            githubLink: 'https://github.com',
-            liveLink: 'https://example.com',
-            featured: true,
-        });
+        await Project.create([
+            {
+                title: 'E-commerce Platform',
+                description: 'A full-featured e-commerce platform with payment integration, user authentication, and admin dashboard.',
+                technologies: ['React', 'Node.js', 'MongoDB', 'Redux', 'Stripe'],
+                githubLink: 'https://github.com',
+                liveLink: 'https://example.com',
+                featured: true,
+            },
+            {
+                title: 'Real-time Chat App',
+                description: 'A responsive real-time chat application with private rooms, media sharing, and instant notifications.',
+                technologies: ['React', 'Socket.io', 'Express', 'Tailwind CSS'],
+                githubLink: 'https://github.com',
+                liveLink: 'https://example.com',
+                featured: true,
+            },
+            {
+                title: 'Task Management System',
+                description: 'A Kanban-style task management web app using drag-and-drop functionality to organize workflows.',
+                technologies: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL'],
+                githubLink: 'https://github.com',
+                liveLink: 'https://example.com',
+                featured: false,
+            }
+        ]);
+
+        // Create Sample Skills
+        await Skill.create([
+            { name: 'JavaScript (ES6+)', level: 90, category: 'Frontend' },
+            { name: 'React.js', level: 85, category: 'Frontend' },
+            { name: 'Node.js & Express', level: 80, category: 'Backend' },
+            { name: 'MongoDB', level: 75, category: 'Backend' },
+            { name: 'Tailwind CSS', level: 95, category: 'Frontend' },
+            { name: 'Git & GitHub', level: 85, category: 'Tools' }
+        ]);
+
+        // Create Sample Experiences
+        await Experience.create([
+            {
+                role: 'Full Stack Developer',
+                company: 'Tech Solutions Inc.',
+                duration: 'Jan 2023 - Present',
+                description: 'Developing and maintaining robust MERN stack applications. Collaborating with cross-functional teams to deliver high-quality software solutions.'
+            },
+            {
+                role: 'Frontend Web Developer',
+                company: 'Creative Agency',
+                duration: 'Jun 2021 - Dec 2022',
+                description: 'Built interactive and responsive UIs with React and Tailwind CSS. Optimized applications for maximum speed and scalability.'
+            }
+        ]);
 
         console.log('Data Imported successfully');
         process.exit();
