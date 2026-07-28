@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
+import { BASE_URL } from '../utils/env';
 import { FaEdit, FaTrash, FaPlus, FaQuoteLeft } from 'react-icons/fa';
 
 const Testimonials = () => {
@@ -94,7 +95,7 @@ const Testimonials = () => {
                         
                         <div className="flex items-center mt-4 pt-4 border-t border-gray-50">
                             {testimonial.image ? (
-                                <img src={`http://localhost:5000${testimonial.image}`} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover mr-4" />
+                                <img src={`${BASE_URL}${testimonial.image}`} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover mr-4" />
                             ) : (
                                 <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mr-4 font-bold text-xl">{testimonial.name.charAt(0)}</div>
                             )}

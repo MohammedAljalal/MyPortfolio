@@ -109,6 +109,11 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// ─── Welcome Route ─────────────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+    res.send('MERN Portfolio API is running...');
+});
+
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
 app.use((req, res) => {
     res.status(404).json({ message: 'Route not found' });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
+import { BASE_URL } from '../utils/env';
 import { FaSave, FaUserCircle } from 'react-icons/fa';
 
 const PersonalInfo = () => {
@@ -71,7 +72,7 @@ const PersonalInfo = () => {
                     <div className="p-6 md:p-8 border-b border-gray-100 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 text-center md:text-left">
                         <div className="relative flex-shrink-0">
                             {currentInfo.profileImage ? (
-                                <img src={`http://localhost:5000${currentInfo.profileImage}`} alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-gray-50 mx-auto md:mx-0" />
+                                <img src={`${BASE_URL}${currentInfo.profileImage}`} alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-gray-50 mx-auto md:mx-0" />
                             ) : (
                                 <FaUserCircle className="w-24 h-24 text-gray-300 bg-gray-50 rounded-full mx-auto md:mx-0" />
                             )}
@@ -125,7 +126,7 @@ const PersonalInfo = () => {
                                 </div>
                                 {currentInfo.resumeLink && (
                                     <div className="text-sm">
-                                        <a href={`http://localhost:5000${currentInfo.resumeLink}`} target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-800 font-medium whitespace-nowrap">View Current Resume</a>
+                                        <a href={`${BASE_URL}${currentInfo.resumeLink}`} target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-800 font-medium whitespace-nowrap">View Current Resume</a>
                                     </div>
                                 )}
                             </div>
