@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-sans antialiased bg-gray-50 text-gray-900 transition-colors duration-300;
+        overflow-x: hidden;
+    }
+
+    html.dark body {
+        @apply bg-darkBg text-gray-100;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-gray-100 dark:bg-darkBg;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 dark:bg-zinc-700 rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-400 dark:bg-zinc-600;
+    }
+
+    /* Accessibility Focus Styles */
+    *:focus-visible {
+        @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-gray-50 dark:ring-offset-darkBg transition-shadow;
+    }
+
+    /* Respect prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+        *, ::before, ::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+@layer utilities {
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+}
+
+/* Gradient text utility */
+.text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+}
+
+/* Glassmorphism utility — tweaked for near-black dark mode */
+.glass {
+    @apply bg-white/70 dark:bg-darkCard/80 backdrop-blur-md border border-white/20 dark:border-white/5 shadow-lg;
+}

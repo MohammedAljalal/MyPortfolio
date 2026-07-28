@@ -1,0 +1,46 @@
+# ===========================
+# Dependencies
+# ===========================
+node_modules/
+
+# ===========================
+# Environment Variables
+# ===========================
+.env
+.env.local
+.env.production
+.env.*.local
+
+# ===========================
+# Build outputs
+# ===========================
+dist/
+build/
+
+# ===========================
+# Uploaded files (served statically, not committed)
+# ===========================
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# ===========================
+# Logs
+# ===========================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+
+# ===========================
+# Editor
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
