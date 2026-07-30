@@ -19,11 +19,13 @@ const storage = multer.diskStorage({
 
 // Accepts both images AND document files (for resume)
 function checkFileType(file, cb) {
-    const imageTypes = /jpg|jpeg|png|webp|gif/;
     const docTypes = /pdf|doc|docx/;
 
     const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
-    const isImage = imageTypes.test(ext) && imageTypes.test(file.mimetype);
+    
+    // Check if it's an image based on mimetype or common image extensions (for cases like HEIC where mimetype might not be standard)
+    const isImage = file.mimetype.startsWith('image/') || /^(jpg|jpeg|png|webp|gif|heic|heif|svg|bmp|tiff|avif)$/.test(ext);
+    
     const isDoc = docTypes.test(ext) && (
         file.mimetype === 'application/pdf' ||
         file.mimetype === 'application/msword' ||
@@ -33,7 +35,7 @@ function checkFileType(file, cb) {
     if (isImage || isDoc) {
         return cb(null, true);
     } else {
-        cb(new Error('Only images (jpg, png, webp) and documents (pdf, doc, docx) are allowed!'));
+        cb(new Error('Only images and documents (pdf, doc, docx) are allowed!'));
     }
 }
 
