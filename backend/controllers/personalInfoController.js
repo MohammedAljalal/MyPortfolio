@@ -1,4 +1,5 @@
 const PersonalInfo = require('../models/personalInfoModel');
+const { convertHeicToJpgIfNeeded } = require('../utils/imageUtils');
 
 /**
  * @desc    Get personal info (singleton document)
@@ -56,10 +57,24 @@ const updatePersonalInfo = async (req, res, next) => {
 
         if (req.files) {
             if (req.files.profileImage && req.files.profileImage.length > 0) {
-                updatedFields.profileImage = `/uploads/${req.files.profileImage[0].filename}`;
+                const finalFilename = await convertHeicToJpgIfNeeded(req.files.profileImage[0]);
+                updatedFields.profileImage = `/uploads/${finalFilename}`;
             }
             if (req.files.resume && req.files.resume.length > 0) {
                 updatedFields.resumeLink = `/uploads/${req.files.resume[0].filename}`;
+            }
+        }
+
+        // Logic for auto-generating a profile picture from the name
+        const currentProfileImage = info ? info.profileImage : null;
+        if (!updatedFields.profileImage) {
+            const isGeneratedAvatar = currentProfileImage && currentProfileImage.startsWith('https://ui-avatars.com/');
+            if (!currentProfileImage || isGeneratedAvatar) {
+                const nameToUse = fullName !== undefined ? fullName : (info?.fullName || 'User');
+                // Only generate if there's no current image, or if the name changed and we're currently using a generated avatar
+                if (!info || !currentProfileImage || (isGeneratedAvatar && fullName && fullName !== info.fullName)) {
+                    updatedFields.profileImage = `https://ui-avatars.com/api/?name=${encodeURIComponent(nameToUse)}&size=256&background=random`;
+                }
             }
         }
 
