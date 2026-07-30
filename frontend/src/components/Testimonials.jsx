@@ -14,8 +14,8 @@ const Testimonials = () => {
 
     if (loading && !testimonials.length) {
         return (
-            <SectionContainer id="testimonials" bg="bg-white dark:bg-darkCard">
-                <SectionHeader eyebrow="Kind Words" title="Testimonials" gradientColors="from-blue-500 to-indigo-500" />
+            <SectionContainer id="testimonials" bg="bg-lightCard dark:bg-darkCard">
+                <SectionHeader eyebrow="Kind Words" title="Testimonials" gradientColors="from-primary to-primary-light" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <SkeletonLoader type="card" count={3} />
                 </div>
@@ -25,8 +25,8 @@ const Testimonials = () => {
 
     if (error) {
         return (
-            <SectionContainer id="testimonials" bg="bg-white dark:bg-darkCard">
-                <SectionHeader eyebrow="Kind Words" title="Testimonials" gradientColors="from-blue-500 to-indigo-500" />
+            <SectionContainer id="testimonials" bg="bg-lightCard dark:bg-darkCard">
+                <SectionHeader eyebrow="Kind Words" title="Testimonials" gradientColors="from-primary to-primary-light" />
                 <ErrorMessage message={error} onRetry={refetch} />
             </SectionContainer>
         );
@@ -35,8 +35,8 @@ const Testimonials = () => {
     if (!testimonials.length) return null;
 
     return (
-        <SectionContainer id="testimonials" bg="bg-white dark:bg-darkCard">
-            <SectionHeader eyebrow="Kind Words" title="Testimonials" gradientColors="from-blue-500 to-indigo-500" />
+        <SectionContainer id="testimonials" bg="bg-lightCard dark:bg-darkCard">
+            <SectionHeader eyebrow="Kind Words" title="Testimonials" gradientColors="from-primary to-primary-light" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {testimonials.map((testimonial, index) => (
@@ -46,19 +46,21 @@ const Testimonials = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
                         key={testimonial._id}
-                        className="bg-gray-50 dark:bg-slate-800 p-8 rounded-3xl relative shadow-sm border border-gray-100 dark:border-gray-700/50 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+                        className="p-8 rounded-3xl relative flex flex-col h-full hover:-translate-y-1 transition-all duration-300 group gold-card"
+                        onMouseEnter={e => e.currentTarget.style.boxShadow='0 16px 40px rgba(200,168,107,0.15)'}
+                        onMouseLeave={e => e.currentTarget.style.boxShadow=''}
                     >
-                        <FaQuoteLeft className="text-4xl text-blue-500/20 dark:text-blue-400/10 absolute top-8 right-8" aria-hidden="true" />
+                        <FaQuoteLeft className="text-4xl absolute top-8 right-8 opacity-15" style={{color:'#c8a86b'}} aria-hidden="true" />
                         
                         <div className="flex-1 mb-8 relative z-10">
-                            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed italic">
+                            <p className="text-lightMuted dark:text-gray-300 text-lg leading-relaxed italic">
                                 "{testimonial.text}"
                             </p>
                         </div>
 
-                        <div className="flex items-center mt-auto border-t border-gray-200 dark:border-gray-700 pt-6">
+                        <div className="flex items-center mt-auto border-t border-amber-100 dark:border-gray-700 pt-6">
                             {testimonial.image ? (
-                                <div className="w-14 h-14 rounded-full overflow-hidden mr-4 border-2 border-white dark:border-gray-600 shadow-sm shrink-0">
+                                <div className="w-14 h-14 rounded-full overflow-hidden mr-4 border-2 shrink-0" style={{borderColor:'rgba(200,168,107,0.4)'}}>
                                     <LazyImage 
                                         src={`${BASE_URL}${testimonial.image}`} 
                                         alt={testimonial.name} 
@@ -66,13 +68,13 @@ const Testimonials = () => {
                                     />
                                 </div>
                             ) : (
-                                <div className="w-14 h-14 rounded-full mr-4 border-2 border-white dark:border-gray-600 shadow-sm shrink-0 bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white font-bold text-xl">
+                                <div className="w-14 h-14 rounded-full mr-4 border-2 shrink-0 flex items-center justify-center text-[#0c0c0c] font-bold text-xl" style={{background:'linear-gradient(135deg, #c8a86b, #dfc090)', borderColor:'rgba(200,168,107,0.4)'}}>
                                     {testimonial.name.charAt(0)}
                                 </div>
                             )}
                             <div>
-                                <h4 className="font-bold text-gray-900 dark:text-white group-hover:text-blue-500 transition-colors">{testimonial.name}</h4>
-                                <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                                <h4 className="font-bold text-lightText dark:text-white group-hover:text-primary transition-colors">{testimonial.name}</h4>
+                                <p className="text-sm text-lightMuted dark:text-gray-400 font-medium">
                                     {testimonial.position} {testimonial.company && <span>@ {testimonial.company}</span>}
                                 </p>
                             </div>

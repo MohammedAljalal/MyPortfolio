@@ -10,35 +10,45 @@
     }
 
     body {
-        @apply font-sans antialiased bg-gray-50 text-gray-900 transition-colors duration-300;
+        @apply font-sans antialiased transition-colors duration-300;
         overflow-x: hidden;
+        background-color: #f5f0e8;
+        color: #1a1208;
     }
 
     html.dark body {
-        @apply bg-darkBg text-gray-100;
+        background-color: #0c0c0c;
+        color: #e2e2e2;
     }
 
     /* Custom scrollbar */
     ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
+        width: 5px;
+        height: 5px;
     }
 
     ::-webkit-scrollbar-track {
-        @apply bg-gray-100 dark:bg-darkBg;
+        background: #f5f0e8;
+    }
+
+    html.dark ::-webkit-scrollbar-track {
+        background: #0c0c0c;
     }
 
     ::-webkit-scrollbar-thumb {
-        @apply bg-gray-300 dark:bg-zinc-700 rounded-full;
+        background: #c8a86b;
+        border-radius: 99px;
+        opacity: 0.5;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        @apply bg-gray-400 dark:bg-zinc-600;
+        background: #dfc090;
     }
 
     /* Accessibility Focus Styles */
     *:focus-visible {
-        @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-gray-50 dark:ring-offset-darkBg transition-shadow;
+        outline: none;
+        box-shadow: 0 0 0 2px #c8a86b, 0 0 0 4px rgba(200,168,107,0.2);
     }
 
     /* Respect prefers-reduced-motion */
@@ -61,12 +71,43 @@
     }
 }
 
-/* Gradient text utility */
+/* Gradient text — Gold */
 .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+    background: linear-gradient(135deg, #c8a86b 0%, #dfc090 50%, #b8923a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
 
-/* Glassmorphism utility — tweaked for near-black dark mode */
-.glass {
-    @apply bg-white/70 dark:bg-darkCard/80 backdrop-blur-md border border-white/20 dark:border-white/5 shadow-lg;
-}
+/* Glassmorphism — Dark Mode */
+html.dark .glass {
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(200, 168, 107, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* Light mode glass */
+html:not(.dark) .glass {
+    background: rgba(255, 248, 235, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(200, 168, 107, 0.3);
+    box-shadow: 0 8px 32px rgba(139, 90, 0, 0.1);
+}
+
+/* Card — Light Mode */
+html:not(.dark) .gold-card {
+    background: rgba(255, 252, 245, 0.95);
+    border: 1px solid rgba(200, 168, 107, 0.25);
+    box-shadow: 0 4px 24px rgba(139, 90, 0, 0.08);
+}
+
+/* Card — Dark Mode */
+html.dark .gold-card {
+    background: #141414;
+    border: 1px solid rgba(200, 168, 107, 0.1);
+    box-shadow: none;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import SectionHeader from './shared/SectionHeader';
 import SectionContainer from './shared/SectionContainer';
 import SkeletonLoader from './shared/SkeletonLoader';
@@ -14,8 +14,8 @@ const Skills = () => {
 
     if (loading && !skills.length) {
         return (
-            <SectionContainer id="skills" bg="bg-gray-50 dark:bg-darkBg">
-                <SectionHeader eyebrow="My Expertise" title="Technical Skills" gradientColors="from-secondary to-teal-400" />
+            <SectionContainer id="skills" bg="bg-lightCard dark:bg-darkBg">
+                <SectionHeader eyebrow="My Expertise" title="Technical Skills" gradientColors="from-primary to-primary-light" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <SkeletonLoader type="card" count={6} />
                 </div>
@@ -25,8 +25,8 @@ const Skills = () => {
 
     if (error) {
         return (
-            <SectionContainer id="skills" bg="bg-gray-50 dark:bg-darkBg">
-                <SectionHeader eyebrow="My Expertise" title="Technical Skills" gradientColors="from-secondary to-teal-400" />
+            <SectionContainer id="skills" bg="bg-lightCard dark:bg-darkBg">
+                <SectionHeader eyebrow="My Expertise" title="Technical Skills" gradientColors="from-primary to-primary-light" />
                 <ErrorMessage message={error} onRetry={refetch} />
             </SectionContainer>
         );
@@ -37,13 +37,34 @@ const Skills = () => {
 
     if (!skills.length) return null;
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1 }
+        }
+    };
+
+    const cardVariants = {
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 100, damping: 12 } }
+    };
+
     return (
-        <SectionContainer id="skills" bg="bg-gray-50 dark:bg-darkBg">
-            <div className="absolute right-0 bottom-40 w-96 h-96 bg-secondary rounded-full mix-blend-multiply filter blur-[100px] opacity-10 dark:opacity-20 animate-blob" aria-hidden="true"></div>
+        <SectionContainer id="skills" bg="bg-lightCard dark:bg-darkBg">
+            <div className="absolute right-0 bottom-40 w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-[100px] opacity-10 dark:opacity-20 animate-pulse-slow" aria-hidden="true"></div>
+            <div className="absolute left-10 top-40 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-[100px] opacity-10 dark:opacity-10 animate-blob" aria-hidden="true"></div>
 
-            <SectionHeader eyebrow="My Expertise" title="Technical Skills" gradientColors="from-secondary to-teal-400" />
+            <SectionHeader eyebrow="My Expertise" title="Technical Skills" gradientColors="from-primary to-primary-light" />
 
-            <div className="flex justify-center flex-wrap gap-4 mb-16" role="tablist" aria-label="Skill Categories">
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="flex justify-center flex-wrap gap-4 mb-16" 
+                role="tablist" 
+                aria-label="Skill Categories"
+            >
                 {categories.map(cat => (
                     <button
                         key={cat}
@@ -52,70 +73,83 @@ const Skills = () => {
                         aria-selected={activeCategory === cat}
                         aria-controls={`panel-${cat}`}
                         id={`tab-${cat}`}
-                        className={`px-8 py-3 rounded-full text-sm font-bold tracking-wide transition-all duration-300 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${activeCategory === cat
-                                ? 'bg-secondary text-white transform scale-105 shadow-secondary/30 shadow-lg border-transparent'
-                                : 'bg-white dark:bg-darkCard text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-secondary hover:text-secondary dark:hover:border-secondary dark:hover:text-secondary hover:-translate-y-1'
-                            }`}
+                        className={`px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none ${
+                            activeCategory === cat
+                                ? 'text-[#0c0c0c]'
+                                : 'text-lightMuted dark:text-[#888888] hover:text-primary dark:hover:text-[#e2e2e2]'
+                        }`}
+                        style={activeCategory === cat 
+                            ? {background:'#c8a86b', boxShadow:'0 4px 16px rgba(200,168,107,0.35)'} 
+                            : {background:'rgba(200,168,107,0.07)', border:'1px solid rgba(200,168,107,0.2)'}}
                     >
                         {cat}
                     </button>
                 ))}
-            </div>
+            </motion.div>
 
-            <div 
+            <motion.div 
                 id={`panel-${activeCategory}`}
                 role="tabpanel"
                 aria-labelledby={`tab-${activeCategory}`}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"
             >
-                {filteredSkills.map((skill, index) => (
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
-                        key={skill._id}
-                        className="bg-white dark:bg-darkCard p-8 rounded-3xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800 hover:-translate-y-2 transition-transform duration-300 group"
-                    >
-                        <div className="flex items-center mb-8">
-                            {skill.icon ? (
-                                <div className="w-16 h-16 p-3 bg-gray-50 dark:bg-slate-800 rounded-2xl mr-5 flex flex-shrink-0 items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 border border-gray-100 dark:border-gray-700 shadow-inner overflow-hidden">
-                                    <LazyImage 
-                                        src={`${BASE_URL}${skill.icon}`} 
-                                        alt={`${skill.name} icon`} 
-                                        className="w-full h-full object-contain filter drop-shadow-sm" 
-                                    />
+                <AnimatePresence mode="popLayout">
+                    {filteredSkills.map((skill, index) => (
+                        <motion.div
+                            layout
+                            variants={cardVariants}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.4 }}
+                            key={skill._id}
+                            className="rounded-2xl p-6 group hover:-translate-y-1 transition-all duration-300 gold-card"
+                            onMouseEnter={e => e.currentTarget.style.boxShadow='0 12px 32px rgba(200,168,107,0.18)'}
+                            onMouseLeave={e => e.currentTarget.style.boxShadow='none'}
+                        >
+                            <div className="flex items-center mb-8">
+                                {skill.icon ? (
+                                    <div className="w-16 h-16 p-3 bg-amber-50 dark:bg-slate-800/50 rounded-2xl mr-5 flex flex-shrink-0 items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border border-amber-200/60 dark:border-gray-700/50 backdrop-blur-md shadow-inner overflow-hidden">
+                                        <LazyImage 
+                                            src={`${BASE_URL}${skill.icon}`} 
+                                            alt={`${skill.name} icon`} 
+                                            className="w-full h-full object-contain filter drop-shadow-sm" 
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex flex-shrink-0 items-center justify-center text-white text-2xl font-black mr-5 shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border border-white/20 dark:border-gray-700">
+                                        {skill.name.substring(0, 2).toUpperCase()}
+                                    </div>
+                                )}
+                                <div>
+                                    <h4 className="text-xl font-bold text-lightText dark:text-white group-hover:text-primary transition-colors drop-shadow-sm">{skill.name}</h4>
+                                    <span className="text-xs font-semibold uppercase tracking-wider text-lightMuted dark:text-gray-400">{skill.category}</span>
                                 </div>
-                            ) : (
-                                <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-secondary rounded-2xl flex flex-shrink-0 items-center justify-center text-white text-2xl font-black mr-5 shadow-lg shadow-emerald-200 dark:shadow-none transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 border border-white/20 dark:border-gray-700">
-                                    {skill.name.substring(0, 2).toUpperCase()}
-                                </div>
-                            )}
+                            </div>
                             <div>
-                                <h4 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-secondary transition-colors">{skill.name}</h4>
-                                <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">{skill.category}</span>
+                                <div className="flex justify-between text-sm font-bold mb-3">
+                                    <span className="text-lightMuted dark:text-gray-400">Proficiency</span>
+                                    <span className="text-primary">{skill.level}%</span>
+                                </div>
+                                <div className="w-full h-3 bg-amber-100 dark:bg-gray-800 rounded-full overflow-hidden shadow-inner" role="progressbar" aria-valuenow={skill.level} aria-valuemin="0" aria-valuemax="100">
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        whileInView={{ width: `${skill.level}%` }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 1.5, delay: 0.3, type: "spring", bounce: 0.2 }}
+                                        className="h-full rounded-full relative overflow-hidden"
+                                        style={{background:'linear-gradient(to right, #c8a86b, #dfc090)'}}
+                                    >
+                                        <div className="absolute top-0 left-0 w-full h-full bg-white/30 transform -skew-x-12 translate-x-full group-hover:animate-shimmer" aria-hidden="true"></div>
+                                    </motion.div>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <div className="flex justify-between text-sm font-bold mb-3">
-                                <span className="text-gray-600 dark:text-gray-400">Proficiency</span>
-                                <span className="text-secondary">{skill.level}%</span>
-                            </div>
-                            <div className="w-full h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden shadow-inner" role="progressbar" aria-valuenow={skill.level} aria-valuemin="0" aria-valuemax="100">
-                                <motion.div
-                                    initial={{ width: 0 }}
-                                    whileInView={{ width: `${skill.level}%` }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-                                    className="h-full bg-gradient-to-r from-emerald-400 to-secondary rounded-full relative overflow-hidden"
-                                >
-                                    <div className="absolute top-0 left-0 w-full h-full bg-white/20 transform -skew-x-12 translate-x-full group-hover:animate-shimmer" aria-hidden="true"></div>
-                                </motion.div>
-                            </div>
-                        </div>
-                    </motion.div>
-                ))}
-            </div>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+            </motion.div>
         </SectionContainer>
     );
 };

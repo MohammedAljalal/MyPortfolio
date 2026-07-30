@@ -78,14 +78,14 @@ const Navbar = ({ info }) => {
 
     return (
         <nav 
-            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'glass py-3' : 'bg-transparent py-5 dark:bg-transparent'}`}
+            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'glass py-3' : 'bg-transparent py-5'}`}
             aria-label="Main Navigation"
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center">
                     <div className="flex-shrink-0">
                         <a href="#home" className="text-2xl font-bold text-gradient tracking-tighter" aria-label="Home">
-                            {info?.fullName ? info.fullName.split(' ')[0] : 'Dev'}<span className="text-gray-900 dark:text-white">.</span>
+                            {info?.fullName ? info.fullName.split(' ')[0] : 'Dev'}<span className="text-lightText dark:text-white">.</span>
                         </a>
                     </div>
 
@@ -95,7 +95,11 @@ const Navbar = ({ info }) => {
                             <a 
                                 key={link.name} 
                                 href={link.href} 
-                                className={`text-sm font-medium transition-colors relative group ${activeSection === link.id ? 'text-primary dark:text-primary' : 'text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary'}`}
+                                className={`text-sm font-medium transition-colors relative group ${
+                                    activeSection === link.id 
+                                        ? 'text-primary' 
+                                        : 'text-lightMuted hover:text-primary dark:text-gray-300 dark:hover:text-primary'
+                                }`}
                                 aria-current={activeSection === link.id ? 'page' : undefined}
                             >
                                 {link.name}
@@ -109,7 +113,7 @@ const Navbar = ({ info }) => {
                         ))}
                         <button 
                             onClick={toggleDarkMode} 
-                            className="p-2.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shadow-inner"
+                            className="p-2.5 rounded-full bg-amber-50 dark:bg-gray-800 text-amber-700 dark:text-gray-200 hover:bg-amber-100 dark:hover:bg-gray-700 transition-colors shadow-inner border border-amber-200/50 dark:border-transparent"
                             aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
                         >
                             {darkMode ? <FaSun /> : <FaMoon />}
@@ -120,14 +124,14 @@ const Navbar = ({ info }) => {
                     <div className="md:hidden flex items-center space-x-3">
                         <button 
                             onClick={toggleDarkMode} 
-                            className="p-2 mr-1 rounded-full text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800"
+                            className="p-2 mr-1 rounded-full text-amber-700 dark:text-gray-300 bg-amber-50 dark:bg-gray-800 border border-amber-200/50 dark:border-transparent"
                             aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
                         >
                             {darkMode ? <FaSun /> : <FaMoon />}
                         </button>
                         <button 
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-                            className="text-gray-700 dark:text-gray-300 focus:outline-none p-2 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                            className="text-lightText dark:text-gray-300 focus:outline-none p-2 bg-amber-50 dark:bg-gray-800 rounded-lg border border-amber-200/50 dark:border-transparent"
                             aria-expanded={mobileMenuOpen}
                             aria-label="Toggle navigation menu"
                         >
@@ -145,7 +149,7 @@ const Navbar = ({ info }) => {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="md:hidden glass absolute top-full left-0 w-full shadow-lg border-t border-gray-200 dark:border-gray-800 mt-2 rounded-b-xl overflow-hidden origin-top"
+                        className="md:hidden glass absolute top-full left-0 w-full shadow-lg border-t border-amber-200/40 dark:border-gray-800 mt-2 rounded-b-xl overflow-hidden origin-top"
                         ref={mobileMenuRef}
                     >
                         <div className="px-6 py-5 space-y-2 max-h-[70vh] overflow-y-auto">
@@ -154,7 +158,11 @@ const Navbar = ({ info }) => {
                                     key={link.name}
                                     href={link.href}
                                     onClick={(e) => handleMobileNavClick(e, link.id)}
-                                    className={`block text-base font-medium py-3 border-b border-gray-100 dark:border-gray-800/50 transition-colors ${activeSection === link.id ? 'text-primary dark:text-primary' : 'text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary'}`}
+                                    className={`block text-base font-medium py-3 border-b border-amber-100/60 dark:border-gray-800/50 transition-colors ${
+                                        activeSection === link.id 
+                                            ? 'text-primary' 
+                                            : 'text-lightText dark:text-gray-200 hover:text-primary dark:hover:text-primary'
+                                    }`}
                                     aria-current={activeSection === link.id ? 'page' : undefined}
                                 >
                                     {link.name}
@@ -169,4 +177,3 @@ const Navbar = ({ info }) => {
 };
 
 export default Navbar;
-

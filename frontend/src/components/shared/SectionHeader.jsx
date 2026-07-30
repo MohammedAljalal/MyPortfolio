@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const SectionHeader = ({ eyebrow, title, gradientColors = "from-primary to-secondary" }) => {
+const SectionHeader = ({ eyebrow, title, gradientColors = "from-primary to-primary-light" }) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -11,14 +11,14 @@ const SectionHeader = ({ eyebrow, title, gradientColors = "from-primary to-secon
             className="text-center mb-16"
         >
             {eyebrow && (
-                <h2 className={`text-sm font-bold uppercase tracking-widest mb-2 font-mono ${gradientColors.includes('secondary') ? 'text-secondary' : 'text-primary'}`}>
+                <p className="text-xs font-bold uppercase tracking-widest mb-3 font-mono text-primary">
                     {eyebrow}
-                </h2>
+                </p>
             )}
-            <h3 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight text-lightText dark:text-darkText">
                 {title}
             </h3>
-            <div className={`w-24 h-1.5 bg-gradient-to-r ${gradientColors} mx-auto mt-6 rounded-full`}></div>
+            <div className="w-16 h-0.5 mx-auto mt-5 rounded-full" style={{background:'linear-gradient(to right, #c8a86b, #dfc090)'}}></div>
         </motion.div>
     );
 };

@@ -12,8 +12,8 @@ const Experience = () => {
 
     if (loading && !experience.length) {
         return (
-            <SectionContainer id="experience" bg="bg-gray-50 dark:bg-darkBg">
-                <SectionHeader eyebrow="My Journey" title="Work Experience" />
+            <SectionContainer id="experience" bg="bg-lightCard dark:bg-darkBg">
+                <SectionHeader eyebrow="My Journey" title="Work Experience" gradientColors="from-primary to-primary-light" />
                 <div className="max-w-4xl mx-auto space-y-12">
                     <SkeletonLoader type="card" count={3} />
                 </div>
@@ -23,8 +23,8 @@ const Experience = () => {
 
     if (error) {
         return (
-            <SectionContainer id="experience" bg="bg-gray-50 dark:bg-darkBg">
-                <SectionHeader eyebrow="My Journey" title="Work Experience" />
+            <SectionContainer id="experience" bg="bg-lightCard dark:bg-darkBg">
+                <SectionHeader eyebrow="My Journey" title="Work Experience" gradientColors="from-primary to-primary-light" />
                 <ErrorMessage message={error} onRetry={refetch} />
             </SectionContainer>
         );
@@ -33,20 +33,20 @@ const Experience = () => {
     if (!experience.length) return null;
 
     return (
-        <SectionContainer id="experience" bg="bg-gray-50 dark:bg-darkBg">
-            <SectionHeader eyebrow="My Journey" title="Work Experience" />
+        <SectionContainer id="experience" bg="bg-lightCard dark:bg-darkBg">
+            <SectionHeader eyebrow="My Journey" title="Work Experience" gradientColors="from-primary to-primary-light" />
 
             <div className="max-w-4xl mx-auto relative">
                 {/* Timeline center line */}
-                <div className="absolute left-6 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1.5 bg-gradient-to-b from-primary via-secondary to-indigo-900 rounded-full opacity-20 hidden sm:block" aria-hidden="true"></div>
+                <div className="absolute left-6 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1.5 bg-gradient-to-b from-primary via-primary-light to-primary rounded-full opacity-25 hidden sm:block" aria-hidden="true"></div>
 
                 <div className="space-y-12 md:space-y-20 relative z-10" role="list">
                     {experience.map((exp, index) => (
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.6, delay: 0.1 }}
+                            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.7, type: "spring", stiffness: 80, damping: 20 }}
                             key={exp._id}
                             className={`flex flex-col md:flex-row items-start relative ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
                             role="listitem"
@@ -55,31 +55,40 @@ const Experience = () => {
                             <div className={`hidden md:block w-1/2 ${index % 2 === 0 ? 'pl-10' : 'pr-10 text-right'}`} aria-hidden="true"></div>
 
                             {/* Timeline Icon */}
-                            <div className="absolute left-6 md:left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full overflow-hidden bg-white dark:bg-darkCard border-4 border-indigo-100 dark:border-slate-800 shadow-xl flex items-center justify-center text-primary z-20 hidden sm:flex" aria-hidden="true">
-                                <FaBriefcase className="w-5 h-5 text-indigo-500" />
-                            </div>
+                            <motion.div 
+                                initial={{ scale: 0, rotate: -180 }}
+                                whileInView={{ scale: 1, rotate: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
+                                className="absolute left-6 md:left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-[#0c0c0c] z-20 hidden sm:flex border-2" aria-hidden="true"
+                                style={{background:'#c8a86b', borderColor:'rgba(200,168,107,0.5)'}}>
+                                <FaBriefcase className="w-6 h-6" />
+                            </motion.div>
 
                             {/* Content Card */}
                             <div className={`w-full sm:pl-20 md:w-1/2 md:pl-0 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                                <div className={`bg-white dark:bg-darkCard p-8 rounded-3xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800 hover:-translate-y-2 transition-all duration-300 relative group ${index % 2 === 0 ? 'md:rounded-tr-none' : 'md:rounded-tl-none'} focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 dark:focus-within:ring-offset-darkBg`}>
-                                    <span className={`absolute top-0 w-full md:w-0 h-1 md:h-full bg-gradient-to-r md:bg-gradient-to-b from-primary to-secondary md:w-1.5 group-hover:scale-100 md:scale-y-0 transition-transform duration-500 ${index % 2 === 0 ? 'md:right-0 md:origin-top' : 'md:left-0 md:origin-top'} scale-x-0 origin-left`} aria-hidden="true"></span>
+                                <div className={`rounded-2xl p-7 hover:-translate-y-1 transition-all duration-400 relative group gold-card ${index % 2 === 0 ? 'md:rounded-tr-none' : 'md:rounded-tl-none'} focus-within:outline-none`}
+                                    onMouseEnter={e => e.currentTarget.style.boxShadow='0 16px 40px rgba(200,168,107,0.15)'}
+                                    onMouseLeave={e => e.currentTarget.style.boxShadow='none'}
+                                >
+                                    <span className={`absolute top-0 w-full md:w-0 h-1 md:h-full bg-gradient-to-r md:bg-gradient-to-b from-primary to-primary-light md:w-1.5 group-hover:scale-100 md:scale-y-0 transition-transform duration-500 ${index % 2 === 0 ? 'md:right-0 md:origin-top' : 'md:left-0 md:origin-top'} scale-x-0 origin-left`} aria-hidden="true"></span>
 
-                                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{exp.role}</h4>
-                                    <h5 className="text-lg font-semibold text-gray-500 dark:text-gray-400 mb-4">{exp.company}</h5>
+                                    <h4 className="text-2xl font-bold text-lightText dark:text-white mb-2 group-hover:text-primary transition-colors drop-shadow-sm">{exp.role}</h4>
+                                    <h5 className="text-lg font-semibold text-lightMuted dark:text-gray-400 mb-4">{exp.company}</h5>
 
-                                    <div className={`inline-block px-4 py-1.5 bg-indigo-50 dark:bg-indigo-900/40 text-primary dark:text-indigo-300 rounded-lg text-sm font-bold mb-6 border border-indigo-100 dark:border-indigo-800/50 ${index % 2 === 0 ? 'md:ml-auto' : ''}`}>
+                                    <div className={`inline-block px-3 py-1 text-xs font-semibold mb-5 rounded ${index % 2 === 0 ? 'md:ml-auto' : ''}`} style={{background:'rgba(200,168,107,0.12)', color:'#c8a86b', border:'1px solid rgba(200,168,107,0.3)'}}>
                                         {exp.duration}
                                     </div>
 
-                                    <p className={`text-gray-600 dark:text-gray-400 text-base leading-relaxed whitespace-pre-wrap mb-4 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                                    <p className={`text-lightMuted dark:text-gray-400 text-base leading-relaxed whitespace-pre-wrap mb-4 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                                         {exp.description}
                                     </p>
 
-                                    {/* Tech Stack Tags (if available, assuming we might add them later to model, handling gracefully if not) */}
+                                    {/* Tech Stack Tags (if available) */}
                                     {exp.technologies && exp.technologies.length > 0 && (
                                         <div className={`flex flex-wrap gap-2 mt-4 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
                                             {exp.technologies.map((tech, idx) => (
-                                                <span key={idx} className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full text-xs font-semibold">
+                                                <span key={idx} className="px-3 py-1 bg-amber-50 dark:bg-gray-800/50 border border-amber-200/60 dark:border-gray-700/50 text-lightMuted dark:text-gray-300 rounded-full text-xs font-semibold shadow-sm">
                                                     {tech}
                                                 </span>
                                             ))}
