@@ -23,11 +23,13 @@ const Navbar = ({ info }) => {
     const mobileMenuRef = useRef(null);
 
     useEffect(() => {
-        const isDark = localStorage.getItem('theme') === 'dark';
+        const savedTheme = localStorage.getItem('theme');
+        const isDark = savedTheme === 'dark' || !savedTheme;
 
         if (isDark) {
             document.documentElement.classList.add('dark');
             setDarkMode(true);
+            if (!savedTheme) localStorage.setItem('theme', 'dark');
         } else {
             document.documentElement.classList.remove('dark');
             setDarkMode(false);

@@ -23,7 +23,7 @@ const getProjects = async (req, res, next) => {
 const createProject = async (req, res, next) => {
     try {
         const {
-            title, description, technologies, githubLink, liveLink, featured,
+            title, description, category, technologies, githubLink, liveLink, featured,
             role, challenges, impact, architecture, timeline, teamSize, metrics, casestudy, order,
         } = req.body;
 
@@ -35,6 +35,7 @@ const createProject = async (req, res, next) => {
         const project = await Project.create({
             title,
             description,
+            category: category || 'Web App',
             image,
             technologies: technologies
                 ? technologies.split(',').map((tech) => tech.trim()).filter(Boolean)
@@ -74,13 +75,14 @@ const updateProject = async (req, res, next) => {
         }
 
         const {
-            title, description, technologies, githubLink, liveLink, featured,
+            title, description, category, technologies, githubLink, liveLink, featured,
             role, challenges, impact, architecture, timeline, teamSize, metrics, casestudy, order,
         } = req.body;
 
         const updatedFields = {
             ...(title !== undefined && { title }),
             ...(description !== undefined && { description }),
+            ...(category !== undefined && { category }),
             ...(technologies !== undefined && {
                 technologies: technologies.split(',').map((t) => t.trim()).filter(Boolean),
             }),

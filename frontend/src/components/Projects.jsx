@@ -12,7 +12,7 @@ import { BASE_URL } from '../utils/env';
 
 const Projects = () => {
     const { data: projects, loading, error, refetch } = useFetchData('/projects', []);
-    const [activeTech, setActiveTech] = useState('All');
+    const [activeCategory, setActiveCategory] = useState('All');
     const [selectedProject, setSelectedProject] = useState(null);
 
     if (loading && !projects.length) {
@@ -35,20 +35,19 @@ const Projects = () => {
         );
     }
 
-    const allTechs = projects.reduce((acc, project) => {
-        project.technologies.forEach(tech => {
-            if (!acc.includes(tech)) acc.push(tech);
-        });
+    const allCategories = projects.reduce((acc, project) => {
+        const cat = project.category || 'Web App';
+        if (!acc.includes(cat)) acc.push(cat);
         return acc;
     }, []);
 
-    const topTechs = ['All', ...allTechs.slice(0, 5)];
+    const topCategories = ['All', ...allCategories.slice(0, 5)];
 
-    const filteredProjects = activeTech === 'All'
+    const filteredProjects = activeCategory === 'All'
         ? projects.filter(p => p.featured)
-        : projects.filter(p => p.technologies.includes(activeTech));
+        : projects.filter(p => (p.category || 'Web App') === activeCategory);
 
-    const displayProjects = activeTech === 'All' ? projects.filter(p => p.featured) : filteredProjects;
+    const displayProjects = activeCategory === 'All' ? projects.filter(p => p.featured) : filteredProjects;
 
     if (!projects.length) return null;
 
@@ -69,40 +68,39 @@ const Projects = () => {
         <SectionContainer id="projects" bg="bg-lightBg dark:bg-darkBg">
             <SectionHeader eyebrow="Portfolio" title="Featured Projects" gradientColors="from-primary to-primary-light" />
 
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                className="flex justify-center flex-wrap gap-4 mb-16" 
-                role="tablist" 
-                aria-label="Project Technologies"
+                className="flex justify-center flex-wrap gap-4 mb-16"
+                role="tablist"
+                aria-label="Project Categories"
             >
-                {topTechs.map(tech => (
+                {topCategories.map(cat => (
                     <button
-                        key={tech}
-                        onClick={() => setActiveTech(tech)}
+                        key={cat}
+                        onClick={() => setActiveCategory(cat)}
                         role="tab"
-                        aria-selected={activeTech === tech}
-                        aria-controls={`project-panel-${tech}`}
-                        id={`project-tab-${tech}`}
-                        className={`px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none ${
-                            activeTech === tech
+                        aria-selected={activeCategory === cat}
+                        aria-controls={`project-panel-${cat}`}
+                        id={`project-tab-${cat}`}
+                        className={`px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 focus-visible:outline-none ${activeCategory === cat
                                 ? 'text-[#0c0c0c]'
                                 : 'text-lightMuted dark:text-[#888888] hover:text-primary dark:hover:text-[#e2e2e2]'
-                        }`}
-                        style={activeTech === tech 
-                            ? {background:'#c8a86b', boxShadow:'0 4px 16px rgba(200,168,107,0.35)'} 
-                            : {background:'rgba(200,168,107,0.07)', border:'1px solid rgba(200,168,107,0.2)'}}
+                            }`}
+                        style={activeCategory === cat
+                            ? { background: '#c8a86b', boxShadow: '0 4px 16px rgba(200,168,107,0.35)' }
+                            : { background: 'rgba(200,168,107,0.07)', border: '1px solid rgba(200,168,107,0.2)' }}
                     >
-                        {tech}
+                        {cat}
                     </button>
                 ))}
             </motion.div>
 
-            <motion.div 
-                id={`project-panel-${activeTech}`}
+            <motion.div
+                id={`project-panel-${activeCategory}`}
                 role="tabpanel"
-                aria-labelledby={`project-tab-${activeTech}`}
+                aria-labelledby={`project-tab-${activeCategory}`}
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -118,8 +116,8 @@ const Projects = () => {
                             transition={{ duration: 0.4 }}
                             key={project._id}
                             className="rounded-2xl overflow-hidden group hover:-translate-y-2 transition-all duration-400 flex flex-col h-full relative cursor-pointer focus-within:outline-none gold-card"
-                            onMouseEnter={e => e.currentTarget.style.boxShadow='0 16px 40px rgba(200,168,107,0.2)'}
-                            onMouseLeave={e => e.currentTarget.style.boxShadow='none'}
+                            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 16px 40px rgba(200,168,107,0.2)'}
+                            onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
                             onClick={() => setSelectedProject(project)}
                             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedProject(project); }}
                             tabIndex={0}
@@ -129,16 +127,17 @@ const Projects = () => {
                             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-[100px] -mr-10 -mt-10 z-0 mix-blend-overlay" aria-hidden="true"></div>
 
                             <div className="relative h-64 overflow-hidden rounded-t-3xl p-4 z-10">
-                                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-sm shadow-inner rounded-t-3xl mx-4 mt-4">
+                                {/* Desktop hover overlay */}
+                                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 items-center justify-center backdrop-blur-sm shadow-inner rounded-t-3xl mx-4 mt-4 hidden md:flex">
                                     <div className="flex space-x-6 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
                                         <span className="px-6 py-2 bg-white text-primary font-bold rounded-full shadow-lg">View Details</span>
                                     </div>
                                 </div>
                                 {project.image ? (
                                     <div className="w-full h-full rounded-2xl overflow-hidden shadow-md transform group-hover:scale-[1.15] group-hover:rotate-2 transition-transform duration-700 bg-amber-50 dark:bg-gray-700">
-                                        <LazyImage 
-                                            src={`${BASE_URL}${project.image}`} 
-                                            alt={`Screenshot of ${project.title}`} 
+                                        <LazyImage
+                                            src={`${BASE_URL}${project.image}`}
+                                            alt={`Screenshot of ${project.title}`}
                                             className="w-full h-full"
                                         />
                                     </div>
@@ -153,10 +152,10 @@ const Projects = () => {
                                 <div className="flex items-center justify-between mb-4">
                                     <h4 className="text-2xl font-bold text-lightText dark:text-white group-hover:text-primary transition-colors tracking-tight drop-shadow-sm">{project.title}</h4>
                                 </div>
-                                <p className="text-lightMuted dark:text-gray-400 mb-8 flex-1 line-clamp-3 overflow-hidden text-base leading-relaxed">
+                                <p className="text-lightMuted dark:text-gray-400 mb-6 flex-1 line-clamp-3 overflow-hidden text-base leading-relaxed">
                                     {project.description}
                                 </p>
-                                <div className="flex flex-wrap gap-2 mt-auto">
+                                <div className="flex flex-wrap gap-2 mb-5">
                                     {project.technologies.slice(0, 4).map((tech, i) => (
                                         <span key={i} className="px-3.5 py-1.5 bg-amber-50 dark:bg-slate-700/50 backdrop-blur-sm border border-amber-200/70 dark:border-gray-600/50 text-primary dark:text-primary-light text-xs font-bold rounded-lg shadow-sm">
                                             {tech}
@@ -168,6 +167,14 @@ const Projects = () => {
                                         </span>
                                     )}
                                 </div>
+                                {/* Always-visible button on mobile, hidden on desktop (desktop uses hover overlay) */}
+                                <button
+                                    className="md:hidden w-full py-2.5 rounded-xl font-bold text-sm text-[#0c0c0c] transition-all focus-visible:outline-none"
+                                    style={{ background: 'linear-gradient(135deg,#c8a86b,#a88c4f)', boxShadow: '0 4px 16px rgba(200,168,107,0.3)' }}
+                                    aria-label={`View details for ${project.title}`}
+                                >
+                                    View Details
+                                </button>
                             </div>
                         </motion.div>
                     ))}
@@ -178,15 +185,15 @@ const Projects = () => {
                 <div className="text-center text-lightMuted dark:text-gray-400 py-20 glass rounded-3xl max-w-2xl mx-auto mt-10">
                     <span className="text-4xl block mb-4" aria-hidden="true">🔍</span>
                     <p className="text-lg font-medium">No projects found for the selected category.</p>
-                    <button onClick={() => setActiveTech('All')} className="mt-4 text-primary hover:underline font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm">View All Projects</button>
+                    <button onClick={() => setActiveCategory('All')} className="mt-4 text-primary hover:underline font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm">View All Projects</button>
                 </div>
             )}
 
             {/* Project Details Modal */}
             {selectedProject && (
-                <ProjectModal 
-                    project={selectedProject} 
-                    onClose={() => setSelectedProject(null)} 
+                <ProjectModal
+                    project={selectedProject}
+                    onClose={() => setSelectedProject(null)}
                 />
             )}
         </SectionContainer>

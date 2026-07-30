@@ -5,6 +5,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import useFetchData from './hooks/useFetchData';
 import { Helmet } from 'react-helmet-async';
 import FloatingContact from './components/shared/FloatingContact';
+import PullToRefresh from './components/shared/PullToRefresh';
 
 // Lazy loaded components for performance
 const Hero = lazy(() => import('./components/Hero'));
@@ -30,6 +31,10 @@ function App() {
 
     const fallbackInfo = personalInfo || { fullName: 'Developer', bio: '', title: '' };
 
+    const handleRefresh = async () => {
+        window.location.reload();
+    };
+
     return (
         <div className="min-h-screen flex flex-col selection:bg-primary selection:text-white bg-gray-50 dark:bg-darkBg transition-colors duration-300 relative">
             <Helmet>
@@ -51,15 +56,17 @@ function App() {
                             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary" aria-label="Loading content..."></div>
                         </div>
                     }>
-                        <Hero info={fallbackInfo} />
-                        <About info={fallbackInfo} />
-                        <Skills />
-                        <Experience />
-                        <Education />
-                        <Projects />
-                        <Certificates />
-                        <Testimonials />
-                        <Contact info={fallbackInfo} />
+                        <PullToRefresh onRefresh={handleRefresh}>
+                            <Hero info={fallbackInfo} />
+                            <About info={fallbackInfo} />
+                            <Skills />
+                            <Experience />
+                            <Education />
+                            <Projects />
+                            <Certificates />
+                            <Testimonials />
+                            <Contact info={fallbackInfo} />
+                        </PullToRefresh>
                     </Suspense>
                 </ErrorBoundary>
             </main>

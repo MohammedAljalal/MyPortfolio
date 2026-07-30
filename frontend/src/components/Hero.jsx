@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaFileDownload } from 'react-icons/fa';
 import LazyImage from './shared/LazyImage';
 import { BASE_URL } from '../utils/env';
+import ParticlesBackground from './ParticlesBackground';
 
 const Hero = ({ info }) => {
     if (!info) return null;
@@ -32,7 +33,8 @@ const Hero = ({ info }) => {
 
     return (
         <section id="home" className="pt-32 pb-20 md:pt-48 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen flex flex-col justify-center relative overflow-hidden">
-
+            <ParticlesBackground />
+            
             {/* Gold ambient glow */}
             <div className="absolute top-32 right-10 w-80 h-80 rounded-full blur-[140px] opacity-[0.15] dark:opacity-[0.07]" style={{background:'#c8a86b'}} aria-hidden="true"></div>
             <div className="absolute bottom-20 left-0 w-64 h-64 rounded-full blur-[120px] opacity-[0.10] dark:opacity-[0.05]" style={{background:'#c8a86b'}} aria-hidden="true"></div>
@@ -83,13 +85,16 @@ const Hero = ({ info }) => {
                             <a 
                                 href={`${BASE_URL}${info.resumeLink}`} 
                                 target="_blank" rel="noreferrer" 
-                                className="px-8 py-3.5 rounded-xl font-medium text-sm transition-all flex items-center transform hover:-translate-y-1 focus-visible:outline-none"
+                                className="pl-6 pr-10 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 transform hover:-translate-y-1 focus-visible:outline-none relative"
                                 style={{background:'transparent', color:'#c8a86b', border:'1px solid rgba(200,168,107,0.5)'}}
                                 onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(200,168,107,0.9)'; e.currentTarget.style.background='rgba(200,168,107,0.05)'; }}
                                 onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(200,168,107,0.5)'; e.currentTarget.style.background='transparent'; }}
-                                aria-label="Download Resume"
+                                aria-label="View or Download CV"
                             >
-                                <FaFileDownload className="mr-2.5" aria-hidden="true" /> Resume
+                                <span>CV</span>
+                                <span className="absolute right-3">
+                                    <FaFileDownload size={14} aria-hidden="true" />
+                                </span>
                             </a>
                         )}
                     </motion.div>
@@ -139,29 +144,7 @@ const Hero = ({ info }) => {
                             </div>
                         )}
 
-                        {/* Floating badge — bottom left */}
-                        <motion.div 
-                            animate={{ y: [-12, 12, -12], rotate: [-1, 1, -1] }} 
-                            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }} 
-                            className="absolute -bottom-6 -left-6 glass p-4 rounded-xl flex items-center z-20 hidden md:flex" aria-hidden="true">
-                            <span className="text-2xl mr-3">💻</span>
-                            <div>
-                                <p className="text-xs font-semibold uppercase text-lightMuted dark:text-mutedText">MERN & Laravel</p>
-                                <p className="font-bold text-sm text-lightText dark:text-darkText">Full Stack</p>
-                            </div>
-                        </motion.div>
-                        
-                        {/* Floating badge — top right */}
-                        <motion.div 
-                            animate={{ y: [12, -12, 12], rotate: [1, -1, 1] }} 
-                            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 1 }} 
-                            className="absolute -top-6 -right-6 glass p-4 rounded-xl flex items-center z-20 hidden md:flex" aria-hidden="true">
-                            <span className="text-2xl mr-3" style={{color:'#c8a86b'}}>✦</span>
-                            <div>
-                                <p className="text-xs font-semibold uppercase text-lightMuted dark:text-mutedText">5+ Years</p>
-                                <p className="font-bold text-sm text-lightText dark:text-darkText">Experience</p>
-                            </div>
-                        </motion.div>
+                        {/* Floating badges removed as requested */}
                     </motion.div>
                 </motion.div>
             </div>

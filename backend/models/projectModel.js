@@ -10,6 +10,11 @@ const projectSchema = mongoose.Schema(
             type: String,
             required: [true, 'Please add a project description'],
         },
+        category: {
+            type: String,
+            default: 'Web App',
+            required: [true, 'Please specify a category (e.g. Web App, Mobile App, Backend)'],
+        },
         image: {
             type: String,
         },

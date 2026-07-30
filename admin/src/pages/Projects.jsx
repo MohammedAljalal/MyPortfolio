@@ -7,7 +7,7 @@ const Projects = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
-    const [formData, setFormData] = useState({ title: '', description: '', technologies: '', githubLink: '', liveLink: '', featured: false });
+    const [formData, setFormData] = useState({ title: '', description: '', category: 'Web App', technologies: '', githubLink: '', liveLink: '', featured: false });
     const [imageFile, setImageFile] = useState(null);
     const [editingId, setEditingId] = useState(null);
 
@@ -48,6 +48,7 @@ const Projects = () => {
         setFormData({
             title: project.title,
             description: project.description,
+            category: project.category || 'Web App',
             technologies: project.technologies.join(', '),
             githubLink: project.githubLink || '',
             liveLink: project.liveLink || '',
@@ -69,7 +70,7 @@ const Projects = () => {
     const closeModal = () => {
         setShowModal(false);
         setEditingId(null);
-        setFormData({ title: '', description: '', technologies: '', githubLink: '', liveLink: '', featured: false });
+        setFormData({ title: '', description: '', category: 'Web App', technologies: '', githubLink: '', liveLink: '', featured: false });
         setImageFile(null);
     };
 
@@ -149,6 +150,16 @@ const Projects = () => {
                                     <div className="col-span-1 md:col-span-2">
                                         <label className="block text-sm font-bold text-lightText mb-1">Description</label>
                                         <textarea name="description" value={formData.description} onChange={handleInputChange} required rows="3" className="w-full bg-white border border-amber-200/60 rounded-xl p-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all shadow-inner text-lightText"></textarea>
+                                    </div>
+                                    <div className="col-span-1 md:col-span-2">
+                                        <label className="block text-sm font-bold text-lightText mb-1">Category</label>
+                                        <select name="category" value={formData.category} onChange={handleInputChange} required className="w-full bg-white border border-amber-200/60 rounded-xl p-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all shadow-inner text-lightText">
+                                            <option value="Web App">Web App</option>
+                                            <option value="Mobile App">Mobile App</option>
+                                            <option value="Backend System">Backend System</option>
+                                            <option value="Desktop App">Desktop App</option>
+                                            <option value="Other">Other</option>
+                                        </select>
                                     </div>
                                     <div className="col-span-1 md:col-span-2">
                                         <label className="block text-sm font-bold text-lightText mb-1">Technologies (comma separated)</label>
