@@ -111,3 +111,12 @@ html.dark .gold-card {
     border: 1px solid rgba(200, 168, 107, 0.1);
     box-shadow: none;
 }
+
+/* Hide scrollbar but keep scrollability */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}

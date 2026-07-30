@@ -127,14 +127,14 @@ const Hero = ({ info }) => {
                         <div className="absolute inset-0 rounded-full blur-3xl transition-opacity duration-500 group-hover:opacity-60" style={{background:'#c8a86b', opacity: 0.18}} aria-hidden="true"></div>
                         
                         {info.profileImage ? (
-                            <div className="relative z-10 w-full h-full rounded-full md:rounded-3xl shadow-2xl border rotate-3 group-hover:rotate-0 transition-transform duration-500 group-hover:scale-[1.02] overflow-hidden" style={{borderColor:'rgba(200,168,107,0.35)', background:'#fffcf5'}}>
+                            <div className="relative z-10 w-full h-full rounded-full shadow-2xl border rotate-3 group-hover:rotate-0 transition-transform duration-500 group-hover:scale-[1.02] overflow-hidden" style={{borderColor:'rgba(200,168,107,0.35)', background:'#fffcf5'}}>
                                 <LazyImage 
-                                    src={`${BASE_URL}${info.profileImage}`} 
+                                    src={info.profileImage.startsWith('http') ? info.profileImage : `${BASE_URL}${info.profileImage}`} 
                                     alt={`Profile photo of ${info.fullName}`} 
                                 />
                             </div>
                         ) : (
-                            <div className="relative z-10 w-full h-full rounded-full md:rounded-3xl shadow-2xl border flex items-center justify-center text-9xl font-bold rotate-3 group-hover:rotate-0 transition-transform duration-500" style={{background:'#fffcf5', borderColor:'rgba(200,168,107,0.35)', color:'#c8a86b'}}>
+                            <div className="relative z-10 w-full h-full rounded-full shadow-2xl border flex items-center justify-center text-9xl font-bold rotate-3 group-hover:rotate-0 transition-transform duration-500" style={{background:'#fffcf5', borderColor:'rgba(200,168,107,0.35)', color:'#c8a86b'}}>
                                 {info.fullName ? info.fullName.charAt(0) : 'D'}
                             </div>
                         )}

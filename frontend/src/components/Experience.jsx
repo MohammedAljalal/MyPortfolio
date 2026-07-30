@@ -33,62 +33,83 @@ const Experience = () => {
     if (!experience.length) return null;
 
     return (
-        <SectionContainer id="experience" bg="bg-lightCard dark:bg-darkBg">
+        <SectionContainer id="experience" bg="bg-lightCard dark:bg-darkBg relative overflow-hidden">
+            {/* Ambient Background Glows */}
+            <div className="absolute right-0 top-1/4 w-[500px] h-[500px] bg-primary rounded-full mix-blend-multiply filter blur-[150px] opacity-10 dark:opacity-20 animate-pulse-slow pointer-events-none" aria-hidden="true"></div>
+            <div className="absolute left-0 bottom-1/4 w-[400px] h-[400px] bg-primary rounded-full mix-blend-multiply filter blur-[150px] opacity-10 dark:opacity-10 pointer-events-none" aria-hidden="true"></div>
+
             <SectionHeader eyebrow="My Journey" title="Work Experience" gradientColors="from-primary to-primary-light" />
 
-            <div className="max-w-4xl mx-auto relative">
-                {/* Timeline center line */}
-                <div className="absolute left-6 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1.5 bg-gradient-to-b from-primary via-primary-light to-primary rounded-full opacity-25 hidden sm:block" aria-hidden="true"></div>
+            <div className="max-w-4xl mx-auto relative mt-10">
+                {/* Connecting Line (Left aligned now) */}
+                <div className="absolute left-6 md:left-12 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-primary-light to-transparent rounded-full opacity-30 hidden md:block shadow-[0_0_15px_rgba(200,168,107,0.5)]" aria-hidden="true"></div>
 
-                <div className="space-y-12 md:space-y-20 relative z-10" role="list">
+                <div className="space-y-12 relative z-10" role="list">
                     {experience.map((exp, index) => (
                         <motion.div
-                            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true, margin: "-100px" }}
-                            transition={{ duration: 0.7, type: "spring", stiffness: 80, damping: 20 }}
+                            transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20, delay: index * 0.1 }}
                             key={exp._id}
-                            className={`flex flex-col md:flex-row items-start relative ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                            className="flex flex-col md:flex-row items-start relative group"
                             role="listitem"
                         >
-                            {/* Spacer for the other side */}
-                            <div className={`hidden md:block w-1/2 ${index % 2 === 0 ? 'pl-10' : 'pr-10 text-right'}`} aria-hidden="true"></div>
-
-                            {/* Timeline Icon */}
-                            <motion.div 
-                                initial={{ scale: 0, rotate: -180 }}
-                                whileInView={{ scale: 1, rotate: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
-                                className="absolute left-6 md:left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-[#0c0c0c] z-20 hidden sm:flex border-2" aria-hidden="true"
-                                style={{background:'#c8a86b', borderColor:'rgba(200,168,107,0.5)'}}>
+                            {/* Timeline Icon (Left Aligned) */}
+                            <div className="hidden md:flex absolute left-12 transform -translate-x-1/2 top-8 w-14 h-14 rounded-full items-center justify-center text-[#0c0c0c] z-20 border-[3px] shadow-[0_0_20px_rgba(200,168,107,0.4)] transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12" aria-hidden="true"
+                                style={{background:'linear-gradient(135deg, #dfc090, #c8a86b)', borderColor:'#fffcf5'}}>
                                 <FaBriefcase className="w-6 h-6" />
-                            </motion.div>
+                            </div>
 
                             {/* Content Card */}
-                            <div className={`w-full sm:pl-20 md:w-1/2 md:pl-0 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                                <div className={`rounded-2xl p-7 hover:-translate-y-1 transition-all duration-400 relative group gold-card ${index % 2 === 0 ? 'md:rounded-tr-none' : 'md:rounded-tl-none'} focus-within:outline-none`}
-                                    onMouseEnter={e => e.currentTarget.style.boxShadow='0 16px 40px rgba(200,168,107,0.15)'}
-                                    onMouseLeave={e => e.currentTarget.style.boxShadow='none'}
+                            <div className="w-full md:pl-28">
+                                <div className="rounded-3xl p-8 md:p-10 transition-all duration-500 relative overflow-hidden"
+                                    style={{
+                                        background: 'rgba(255, 255, 255, 0.03)',
+                                        backdropFilter: 'blur(10px)',
+                                        border: '1px solid rgba(200, 168, 107, 0.15)',
+                                    }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.transform = 'translateY(-5px)';
+                                        e.currentTarget.style.boxShadow = '0 25px 50px rgba(200,168,107,0.12)';
+                                        e.currentTarget.style.border = '1px solid rgba(200, 168, 107, 0.4)';
+                                        e.currentTarget.style.background = 'rgba(200, 168, 107, 0.05)';
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.transform = 'none';
+                                        e.currentTarget.style.boxShadow = 'none';
+                                        e.currentTarget.style.border = '1px solid rgba(200, 168, 107, 0.15)';
+                                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+                                    }}
                                 >
-                                    <span className={`absolute top-0 w-full md:w-0 h-1 md:h-full bg-gradient-to-r md:bg-gradient-to-b from-primary to-primary-light md:w-1.5 group-hover:scale-100 md:scale-y-0 transition-transform duration-500 ${index % 2 === 0 ? 'md:right-0 md:origin-top' : 'md:left-0 md:origin-top'} scale-x-0 origin-left`} aria-hidden="true"></span>
+                                    {/* Hover Glow Effect inside card */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
-                                    <h4 className="text-2xl font-bold text-lightText dark:text-white mb-2 group-hover:text-primary transition-colors drop-shadow-sm">{exp.role}</h4>
-                                    <h5 className="text-lg font-semibold text-lightMuted dark:text-gray-400 mb-4">{exp.company}</h5>
-
-                                    <div className={`inline-block px-3 py-1 text-xs font-semibold mb-5 rounded ${index % 2 === 0 ? 'md:ml-auto' : ''}`} style={{background:'rgba(200,168,107,0.12)', color:'#c8a86b', border:'1px solid rgba(200,168,107,0.3)'}}>
-                                        {exp.duration}
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 relative z-10 gap-4">
+                                        <div>
+                                            <h4 className="text-2xl md:text-3xl font-extrabold text-lightText dark:text-white mb-2 group-hover:text-primary transition-colors tracking-tight">{exp.role}</h4>
+                                            <h5 className="text-lg md:text-xl font-semibold text-lightMuted dark:text-[#a0a0a0] flex items-center gap-2">
+                                                <span className="w-6 h-[1px] bg-primary/50 hidden md:block"></span>
+                                                {exp.company}
+                                            </h5>
+                                        </div>
+                                        
+                                        {/* Duration Badge */}
+                                        <div className="inline-flex self-start items-center px-4 py-2 text-sm font-bold rounded-xl tracking-wide" style={{background:'linear-gradient(to right, rgba(200,168,107,0.15), rgba(200,168,107,0.05))', color:'#c8a86b', border:'1px solid rgba(200,168,107,0.2)'}}>
+                                            <span className="w-2.5 h-2.5 rounded-full bg-primary mr-2 animate-pulse shadow-[0_0_8px_#c8a86b]"></span>
+                                            {exp.duration}
+                                        </div>
                                     </div>
 
-                                    <p className={`text-lightMuted dark:text-gray-400 text-base leading-relaxed whitespace-pre-wrap mb-4 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                                    <p className="text-lightMuted dark:text-gray-400 text-[15px] md:text-base leading-relaxed whitespace-pre-wrap mb-8 relative z-10">
                                         {exp.description}
                                     </p>
 
-                                    {/* Tech Stack Tags (if available) */}
+                                    {/* Tech Stack Tags */}
                                     {exp.technologies && exp.technologies.length > 0 && (
-                                        <div className={`flex flex-wrap gap-2 mt-4 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
+                                        <div className="flex flex-wrap gap-2.5 relative z-10">
                                             {exp.technologies.map((tech, idx) => (
-                                                <span key={idx} className="px-3 py-1 bg-amber-50 dark:bg-gray-800/50 border border-amber-200/60 dark:border-gray-700/50 text-lightMuted dark:text-gray-300 rounded-full text-xs font-semibold shadow-sm">
+                                                <span key={idx} className="px-4 py-1.5 bg-[#fbf8f1] dark:bg-[#1a1a1a] border border-[#eaddc4] dark:border-[#333] text-lightMuted dark:text-gray-300 rounded-lg text-sm font-semibold shadow-sm transition-transform hover:-translate-y-1 cursor-default hover:text-primary dark:hover:text-primary hover:border-primary/50">
                                                     {tech}
                                                 </span>
                                             ))}

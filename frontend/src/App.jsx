@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import useFetchData from './hooks/useFetchData';
 import { Helmet } from 'react-helmet-async';
+import FloatingContact from './components/shared/FloatingContact';
 
 // Lazy loaded components for performance
 const Hero = lazy(() => import('./components/Hero'));
@@ -62,8 +63,8 @@ function App() {
                     </Suspense>
                 </ErrorBoundary>
             </main>
-            
             <Footer info={fallbackInfo} />
+            <FloatingContact />
         </div>
     );
 }

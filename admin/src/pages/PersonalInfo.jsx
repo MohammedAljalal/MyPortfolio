@@ -39,19 +39,25 @@ const PersonalInfo = () => {
         setMessage({ text: '', type: '' });
 
         const data = new FormData();
+        // Append all text fields
         Object.keys(formData).forEach(key => data.append(key, formData[key]));
+        // Append files if selected
         if (profileImage) data.append('profileImage', profileImage);
         if (resume) data.append('resume', resume);
 
         try {
-            const res = await api.put('/personal', data);
+            const res = await api.put('/personal', data, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
             setCurrentInfo(res.data);
             setMessage({ text: 'Personal info updated successfully!', type: 'success' });
             // Clear file inputs
             setProfileImage(null);
             setResume(null);
         } catch (err) {
-            setMessage({ text: 'Error updating info.', type: 'error' });
+            const errMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'Error updating info.';
+            setMessage({ text: `Error: ${errMsg}`, type: 'error' });
+            console.error('Personal info update error:', err.response?.data || err);
         } finally { setSaving(false); }
     };
 
