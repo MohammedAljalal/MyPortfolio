@@ -61,58 +61,61 @@ const Skills = () => {
         setIconFile(null);
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className="p-10 text-center text-lightMuted">Loading...</div>;
 
     return (
         <div>
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold text-gray-800">Skills</h1>
-                <button onClick={() => setShowModal(true)} className="bg-indigo-600 text-white px-4 py-2 rounded-lg flex items-center">
+                <h1 className="text-2xl font-bold text-lightText">Skills</h1>
+                <button onClick={() => setShowModal(true)} className="text-[#0c0c0c] font-bold px-5 py-2.5 rounded-xl flex items-center shadow-md hover:-translate-y-0.5 transition-all focus:ring-2 focus:ring-offset-2 focus:ring-primary" style={{background:'linear-gradient(135deg, #c8a86b, #a88c4f)'}}>
                     <FaPlus className="mr-2" /> Add Skill
                 </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {skills.map(skill => (
-                    <div key={skill._id} className="bg-white p-6 rounded-xl shadow-sm flex items-center justify-between border border-gray-100">
+                    <div key={skill._id} className="bg-lightCard p-6 rounded-2xl shadow-sm flex items-center justify-between border border-lightBorder hover:shadow-md transition-shadow">
                         <div className="flex items-center w-full min-w-0 mr-4">
                             {skill.icon ? (
-                                <img src={`${BASE_URL}${skill.icon}`} alt="" className="w-12 h-12 object-contain mr-4 flex-shrink-0" />
+                                <img src={`${BASE_URL}${skill.icon}`} alt="" className="w-12 h-12 object-contain mr-4 flex-shrink-0 drop-shadow-sm" />
                             ) : (
-                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mr-4 font-bold text-xl flex-shrink-0">{skill.name.charAt(0)}</div>
+                                <div className="w-12 h-12 bg-amber-50 border border-amber-200/50 rounded-xl flex items-center justify-center text-primary-dark mr-4 font-bold text-xl flex-shrink-0">{skill.name.charAt(0)}</div>
                             )}
                             <div className="flex-1 min-w-0">
-                                <h3 className="font-bold text-gray-800 truncate">{skill.name}</h3>
-                                <p className="text-sm text-gray-500">{skill.category} • {skill.level}%</p>
-                                <div className="w-full h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
-                                    <div className="h-full bg-indigo-500" style={{ width: `${skill.level}%` }}></div>
+                                <h3 className="font-bold text-lightText truncate">{skill.name}</h3>
+                                <p className="text-xs text-lightMuted mt-0.5 font-medium">{skill.category} • {skill.level}%</p>
+                                <div className="w-full h-2 bg-amber-100/50 rounded-full mt-2.5 overflow-hidden">
+                                    <div className="h-full" style={{ width: `${skill.level}%`, background:'linear-gradient(90deg, #dfc090, #c8a86b)' }}></div>
                                 </div>
                             </div>
                         </div>
                         <div className="flex flex-col space-y-2 flex-shrink-0">
-                            <button onClick={() => editSkill(skill)} className="text-gray-400 hover:text-indigo-600"><FaEdit /></button>
-                            <button onClick={() => deleteSkill(skill._id)} className="text-gray-400 hover:text-red-600"><FaTrash /></button>
+                            <button onClick={() => editSkill(skill)} className="text-lightMuted hover:text-primary transition-colors p-2"><FaEdit /></button>
+                            <button onClick={() => deleteSkill(skill._id)} className="text-lightMuted hover:text-red-500 transition-colors p-2"><FaTrash /></button>
                         </div>
                     </div>
                 ))}
-                {skills.length === 0 && <div className="col-span-3 text-center text-gray-500 py-10">No skills added yet.</div>}
+                {skills.length === 0 && <div className="col-span-3 text-center text-lightMuted py-10">No skills added yet.</div>}
             </div>
 
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm" onClick={closeModal}></div>
-                    <div className="bg-white p-6 md:p-8 rounded-2xl z-10 w-full max-w-lg relative">
-                        <h2 className="text-xl font-bold mb-6 text-gray-800">{editingId ? 'Edit Skill' : 'Add New Skill'}</h2>
+                    <div className="absolute inset-0 bg-gray-900 bg-opacity-60 backdrop-blur-sm" onClick={closeModal}></div>
+                    <div className="bg-lightCard p-6 md:p-8 rounded-2xl shadow-xl z-10 w-full max-w-lg relative border border-lightBorder">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-xl font-bold text-lightText">{editingId ? 'Edit Skill' : 'Add New Skill'}</h2>
+                            <button onClick={closeModal} className="text-lightMuted hover:text-red-500 text-2xl leading-none transition-colors">&times;</button>
+                        </div>
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 gap-5">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                                    <input type="text" name="name" value={formData.name} onChange={handleInputChange} required className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" />
+                                    <label className="block text-sm font-bold text-lightText mb-1">Name</label>
+                                    <input type="text" name="name" value={formData.name} onChange={handleInputChange} required className="w-full bg-white border border-amber-200/60 rounded-xl p-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all shadow-inner text-lightText" />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                                        <select name="category" value={formData.category} onChange={handleInputChange} className="w-full border border-gray-300 p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 transition-all bg-white">
+                                        <label className="block text-sm font-bold text-lightText mb-1">Category</label>
+                                        <select name="category" value={formData.category} onChange={handleInputChange} className="w-full bg-white border border-amber-200/60 p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-inner text-lightText">
                                             <option value="Frontend">Frontend</option>
                                             <option value="Backend">Backend</option>
                                             <option value="Database">Database</option>
@@ -120,18 +123,18 @@ const Skills = () => {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Level (1-100)</label>
-                                        <input type="number" min="1" max="100" name="level" value={formData.level} onChange={handleInputChange} required className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" />
+                                        <label className="block text-sm font-bold text-lightText mb-1">Level (1-100)</label>
+                                        <input type="number" min="1" max="100" name="level" value={formData.level} onChange={handleInputChange} required className="w-full bg-white border border-amber-200/60 rounded-xl p-3 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all shadow-inner text-lightText" />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Icon/Logo Image</label>
-                                    <input type="file" accept="image/*" onChange={(e) => setIconFile(e.target.files[0])} className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+                                    <label className="block text-sm font-bold text-lightText mb-1">Icon/Logo Image</label>
+                                    <input type="file" accept="image/*" onChange={(e) => setIconFile(e.target.files[0])} className="w-full border border-amber-200/60 rounded-xl p-2 text-sm text-lightMuted file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary-dark hover:file:bg-primary/20 bg-white" />
                                 </div>
                             </div>
-                            <div className="mt-8 flex justify-end space-x-3 pt-4 border-t border-gray-100">
-                                <button type="button" onClick={closeModal} className="px-5 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">Cancel</button>
-                                <button type="submit" className="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 shadow-sm transition-colors">{editingId ? 'Save Changes' : 'Add Skill'}</button>
+                            <div className="mt-8 flex justify-end space-x-3 pt-5 border-t border-lightBorder">
+                                <button type="button" onClick={closeModal} className="px-5 py-2.5 border border-amber-200/60 rounded-xl text-lightMuted hover:bg-amber-50 font-bold transition-colors">Cancel</button>
+                                <button type="submit" className="px-5 py-2.5 rounded-xl font-bold transition-colors shadow-md text-[#0c0c0c] hover:-translate-y-0.5" style={{background:'linear-gradient(135deg, #c8a86b, #a88c4f)'}}>{editingId ? 'Save Changes' : 'Add Skill'}</button>
                             </div>
                         </form>
                     </div>

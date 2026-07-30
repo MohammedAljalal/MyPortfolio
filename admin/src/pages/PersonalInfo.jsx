@@ -55,86 +55,88 @@ const PersonalInfo = () => {
         } finally { setSaving(false); }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className="p-10 text-center text-lightMuted">Loading...</div>;
 
     return (
         <div className="max-w-4xl mx-auto">
-            <h1 className="text-2xl font-bold text-gray-800 mb-6">Personal Information</h1>
+            <h1 className="text-2xl font-bold text-lightText mb-6">Personal Information</h1>
 
             {message.text && (
-                <div className={`p-4 rounded-lg mb-6 ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+                <div className={`p-4 rounded-xl mb-6 shadow-sm border ${message.type === 'success' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-red-50 text-red-700 border-red-200'}`}>
                     {message.text}
                 </div>
             )}
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <form onSubmit={handleSubmit}>
-                    <div className="p-6 md:p-8 border-b border-gray-100 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 text-center md:text-left">
+            <div className="bg-lightCard rounded-2xl shadow-sm border border-lightBorder overflow-hidden relative group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-150 z-0" aria-hidden="true"></div>
+
+                <form onSubmit={handleSubmit} className="relative z-10">
+                    <div className="p-6 md:p-8 border-b border-lightBorder flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 text-center md:text-left bg-amber-50/30">
                         <div className="relative flex-shrink-0">
                             {currentInfo.profileImage ? (
-                                <img src={`${BASE_URL}${currentInfo.profileImage}`} alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-gray-50 mx-auto md:mx-0" />
+                                <img src={`${BASE_URL}${currentInfo.profileImage}`} alt="Profile" className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto md:mx-0" />
                             ) : (
-                                <FaUserCircle className="w-24 h-24 text-gray-300 bg-gray-50 rounded-full mx-auto md:mx-0" />
+                                <FaUserCircle className="w-28 h-28 text-amber-200/50 bg-white rounded-full mx-auto md:mx-0 shadow-sm" />
                             )}
                         </div>
                         <div className="flex-1 w-full text-left">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Update Profile Picture</label>
-                            <input type="file" onChange={(e) => setProfileImage(e.target.files[0])} accept="image/*" className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition-colors" />
+                            <label className="block text-sm font-bold text-lightText mb-2">Update Profile Picture</label>
+                            <input type="file" onChange={(e) => setProfileImage(e.target.files[0])} accept="image/*" className="w-full text-sm text-lightMuted file:mr-4 file:py-2.5 file:px-5 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary-dark hover:file:bg-primary/20 transition-colors bg-white border border-amber-200/50 rounded-xl" />
                         </div>
                     </div>
 
                     <div className="p-8 space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required className="w-full border border-gray-300 p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500" />
+                                <label className="block text-sm font-bold text-lightText mb-1">Full Name</label>
+                                <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required className="w-full bg-white border border-amber-200/60 p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-inner text-lightText" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Professional Title</label>
-                                <input type="text" name="title" value={formData.title} onChange={handleInputChange} required className="w-full border border-gray-300 p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500" placeholder="e.g. Full Stack Developer" />
+                                <label className="block text-sm font-bold text-lightText mb-1">Professional Title</label>
+                                <input type="text" name="title" value={formData.title} onChange={handleInputChange} required className="w-full bg-white border border-amber-200/60 p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-inner text-lightText" placeholder="e.g. Full Stack Developer" />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Professional Bio</label>
-                            <textarea name="bio" value={formData.bio} onChange={handleInputChange} required rows="5" className="w-full border border-gray-300 p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                            <label className="block text-sm font-bold text-lightText mb-1">Professional Bio</label>
+                            <textarea name="bio" value={formData.bio} onChange={handleInputChange} required rows="5" className="w-full bg-white border border-amber-200/60 p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-inner text-lightText"></textarea>
                         </div>
 
-                        <div className="border-t border-gray-100 pt-6">
-                            <h3 className="text-lg font-medium text-gray-800 mb-4">Social Links</h3>
+                        <div className="border-t border-lightBorder pt-6">
+                            <h3 className="text-lg font-bold text-lightText mb-4">Social Links</h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">GitHub URL</label>
-                                    <input type="url" name="github" value={formData.github} onChange={handleInputChange} className="w-full border border-gray-300 p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 text-sm" />
+                                    <label className="block text-sm font-bold text-lightText mb-1">GitHub URL</label>
+                                    <input type="url" name="github" value={formData.github} onChange={handleInputChange} className="w-full bg-white border border-amber-200/60 p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-inner text-lightText text-sm" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">LinkedIn URL</label>
-                                    <input type="url" name="linkedin" value={formData.linkedin} onChange={handleInputChange} className="w-full border border-gray-300 p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 text-sm" />
+                                    <label className="block text-sm font-bold text-lightText mb-1">LinkedIn URL</label>
+                                    <input type="url" name="linkedin" value={formData.linkedin} onChange={handleInputChange} className="w-full bg-white border border-amber-200/60 p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-inner text-lightText text-sm" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Twitter URL</label>
-                                    <input type="url" name="twitter" value={formData.twitter} onChange={handleInputChange} className="w-full border border-gray-300 p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 text-sm" />
+                                    <label className="block text-sm font-bold text-lightText mb-1">Twitter URL</label>
+                                    <input type="url" name="twitter" value={formData.twitter} onChange={handleInputChange} className="w-full bg-white border border-amber-200/60 p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-inner text-lightText text-sm" />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="border-t border-gray-100 pt-6">
-                            <h3 className="text-lg font-medium text-gray-800 mb-4">Resume/CV</h3>
+                        <div className="border-t border-lightBorder pt-6">
+                            <h3 className="text-lg font-bold text-lightText mb-4">Resume/CV</h3>
                             <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6">
                                 <div className="flex-1 w-full">
-                                    <input type="file" onChange={(e) => setResume(e.target.files[0])} accept=".pdf,.doc,.docx" className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition-colors" />
+                                    <input type="file" onChange={(e) => setResume(e.target.files[0])} accept=".pdf,.doc,.docx" className="w-full text-sm text-lightMuted file:mr-4 file:py-2.5 file:px-5 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition-colors bg-white border border-amber-200/50 rounded-xl" />
                                 </div>
                                 {currentInfo.resumeLink && (
                                     <div className="text-sm">
-                                        <a href={`${BASE_URL}${currentInfo.resumeLink}`} target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-800 font-medium whitespace-nowrap">View Current Resume</a>
+                                        <a href={`${BASE_URL}${currentInfo.resumeLink}`} target="_blank" rel="noreferrer" className="text-primary-dark hover:text-primary font-bold whitespace-nowrap transition-colors">View Current Resume</a>
                                     </div>
                                 )}
                             </div>
                         </div>
                     </div>
 
-                    <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-end rounded-b-xl">
-                        <button type="submit" disabled={saving} className="bg-indigo-600 text-white px-6 py-2.5 rounded-lg flex items-center shadow-md font-medium hover:bg-indigo-700 transition-colors disabled:opacity-70">
+                    <div className="p-6 bg-amber-50/50 border-t border-lightBorder flex justify-end rounded-b-2xl">
+                        <button type="submit" disabled={saving} className="text-[#0c0c0c] px-8 py-3 rounded-xl flex items-center shadow-md font-bold transition-all disabled:opacity-70 hover:-translate-y-0.5" style={{background:'linear-gradient(135deg, #c8a86b, #a88c4f)'}}>
                             {saving ? 'Saving...' : <><FaSave className="mr-2" /> Save Changes</>}
                         </button>
                     </div>

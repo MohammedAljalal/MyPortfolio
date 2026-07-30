@@ -9,20 +9,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f0e8;
+  color: #1a1208;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f5f0e8;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #c8a86b;
   border-radius: 4px;
+  opacity: 0.8;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: #a88c4f;
 }
