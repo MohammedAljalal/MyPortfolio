@@ -21,7 +21,7 @@ const createSkill = async (req, res, next) => {
         let icon = '';
 
         if (req.file) {
-            icon = `/uploads/${req.file.filename}`;
+            icon = req.file.path;
         }
 
         const skill = await Skill.create({
@@ -61,7 +61,7 @@ const updateSkill = async (req, res, next) => {
         Object.keys(updatedFields).forEach(key => updatedFields[key] === undefined && delete updatedFields[key]);
 
         if (req.file) {
-            updatedFields.icon = `/uploads/${req.file.filename}`;
+            updatedFields.icon = req.file.path;
         }
 
         const updatedSkill = await Skill.findByIdAndUpdate(

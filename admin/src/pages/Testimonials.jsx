@@ -95,7 +95,7 @@ const Testimonials = () => {
                         
                         <div className="flex items-center mt-6 pt-4 border-t border-amber-200/40">
                             {testimonial.image ? (
-                                <img src={`${BASE_URL}${testimonial.image}`} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover mr-4 border border-lightBorder" />
+                                <img src={testimonial.image.startsWith('http') ? testimonial.image : `${BASE_URL}${testimonial.image}`} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover mr-4 border border-lightBorder" />
                             ) : (
                                 <div className="w-12 h-12 bg-amber-50 border border-amber-200/50 rounded-full flex items-center justify-center text-primary-dark mr-4 font-bold text-xl">{testimonial.name.charAt(0)}</div>
                             )}

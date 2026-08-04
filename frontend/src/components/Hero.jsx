@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaFileDownload } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaFileDownload, FaEye } from 'react-icons/fa';
 import LazyImage from './shared/LazyImage';
 import { BASE_URL } from '../utils/env';
 import ParticlesBackground from './ParticlesBackground';
@@ -83,18 +83,15 @@ const Hero = ({ info }) => {
                         </a>
                         {info.resumeLink && (
                             <a 
-                                href={`${BASE_URL}${info.resumeLink}`} 
+                                href={info.resumeLink.startsWith('http') ? info.resumeLink : `${BASE_URL}${info.resumeLink}`}
                                 target="_blank" rel="noreferrer" 
-                                className="pl-6 pr-10 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 transform hover:-translate-y-1 focus-visible:outline-none relative"
+                                className="px-6 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 transform hover:-translate-y-1 focus-visible:outline-none"
                                 style={{background:'transparent', color:'#c8a86b', border:'1px solid rgba(200,168,107,0.5)'}}
                                 onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(200,168,107,0.9)'; e.currentTarget.style.background='rgba(200,168,107,0.05)'; }}
                                 onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(200,168,107,0.5)'; e.currentTarget.style.background='transparent'; }}
-                                aria-label="View or Download CV"
+                                aria-label="View CV"
                             >
-                                <span>CV</span>
-                                <span className="absolute right-3">
-                                    <FaFileDownload size={14} aria-hidden="true" />
-                                </span>
+                                <FaEye size={14} aria-hidden="true" /> View CV
                             </a>
                         )}
                     </motion.div>

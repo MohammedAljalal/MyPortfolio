@@ -98,7 +98,7 @@ const ProjectModal = ({ project, onClose }) => {
                                 <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 aspect-video relative">
                                     {project.image ? (
                                         <LazyImage 
-                                            src={`${BASE_URL}${project.image}`} 
+                                            src={project.image.startsWith('http') ? project.image : `${BASE_URL}${project.image}`} 
                                             alt={project.title} 
                                             className="w-full h-full"
                                         />

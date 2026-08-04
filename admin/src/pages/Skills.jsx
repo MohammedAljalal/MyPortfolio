@@ -77,7 +77,7 @@ const Skills = () => {
                     <div key={skill._id} className="bg-lightCard p-6 rounded-2xl shadow-sm flex items-center justify-between border border-lightBorder hover:shadow-md transition-shadow">
                         <div className="flex items-center w-full min-w-0 mr-4">
                             {skill.icon ? (
-                                <img src={`${BASE_URL}${skill.icon}`} alt="" className="w-12 h-12 object-contain mr-4 flex-shrink-0 drop-shadow-sm" />
+                                <img src={skill.icon.startsWith('http') ? skill.icon : `${BASE_URL}${skill.icon}`} alt="" className="w-12 h-12 object-contain mr-4 flex-shrink-0 drop-shadow-sm" />
                             ) : (
                                 <div className="w-12 h-12 bg-amber-50 border border-amber-200/50 rounded-xl flex items-center justify-center text-primary-dark mr-4 font-bold text-xl flex-shrink-0">{skill.name.charAt(0)}</div>
                             )}

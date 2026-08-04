@@ -1,19 +1,31 @@
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const dotenv = require('dotenv');
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
+dotenv.config();
 
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename(req, file, cb) {
-        cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: async (req, file) => {
+        const docTypes = /pdf|doc|docx/;
+        const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
+        const isDoc = docTypes.test(ext) || file.mimetype === 'application/pdf';
+
+        return {
+            folder: 'mern-portfolio',
+            resource_type: isDoc ? 'raw' : 'auto',
+            public_id: isDoc
+                ? `${file.fieldname}-${Date.now()}.${ext}`   // e.g. resume-1234567890.pdf
+                : `${file.fieldname}-${Date.now()}`           // images: Cloudinary handles extension
+        };
     },
 });
 

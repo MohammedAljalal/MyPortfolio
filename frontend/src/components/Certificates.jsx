@@ -54,7 +54,7 @@ const Certificates = () => {
                         <div className="relative h-48 bg-amber-50 dark:bg-slate-800 overflow-hidden">
                             {cert.image ? (
                                 <LazyImage 
-                                    src={`${BASE_URL}${cert.image}`} 
+                                    src={cert.image.startsWith('http') ? cert.image : `${BASE_URL}${cert.image}`} 
                                     alt={`${cert.title} Certificate`} 
                                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                                 />

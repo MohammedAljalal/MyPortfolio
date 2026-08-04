@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FaEye, FaFileDownload } from 'react-icons/fa';
 import SectionHeader from './shared/SectionHeader';
 import SectionContainer from './shared/SectionContainer';
 import { BASE_URL } from '../utils/env';
@@ -72,26 +73,7 @@ const About = ({ info }) => {
                         ))}
                     </motion.div>
                 )}
-                {info.resumeLink && (
-                    <motion.div variants={itemVariants} className="flex justify-center mt-12">
-                        <a 
-                            href={`${BASE_URL}${info.resumeLink}`} 
-                            target="_blank" rel="noreferrer"
-                            className="px-10 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center transform hover:-translate-y-1 focus-visible:outline-none relative group"
-                            style={{background:'transparent', color:'#c8a86b', border:'1px solid rgba(200,168,107,0.5)'}}
-                            onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(200,168,107,0.9)'; e.currentTarget.style.background='rgba(200,168,107,0.05)'; }}
-                            onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(200,168,107,0.5)'; e.currentTarget.style.background='transparent'; }}
-                            aria-label="Download CV"
-                        >
-                            CV
-                            <div className="absolute right-4 opacity-70 group-hover:opacity-100 transition-opacity">
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                                </svg>
-                            </div>
-                        </a>
-                    </motion.div>
-                )}
+
             </div>
         </SectionContainer>
     );

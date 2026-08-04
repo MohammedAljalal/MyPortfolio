@@ -1,5 +1,5 @@
 const PersonalInfo = require('../models/personalInfoModel');
-const { convertHeicToJpgIfNeeded } = require('../utils/imageUtils');
+
 
 /**
  * @desc    Get personal info (singleton document)
@@ -57,11 +57,10 @@ const updatePersonalInfo = async (req, res, next) => {
 
         if (req.files) {
             if (req.files.profileImage && req.files.profileImage.length > 0) {
-                const finalFilename = await convertHeicToJpgIfNeeded(req.files.profileImage[0]);
-                updatedFields.profileImage = `/uploads/${finalFilename}`;
+                updatedFields.profileImage = req.files.profileImage[0].path;
             }
             if (req.files.resume && req.files.resume.length > 0) {
-                updatedFields.resumeLink = `/uploads/${req.files.resume[0].filename}`;
+                updatedFields.resumeLink = req.files.resume[0].path;
             }
         }
 

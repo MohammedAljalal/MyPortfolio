@@ -1,5 +1,5 @@
 const Project = require('../models/projectModel');
-const { convertHeicToJpgIfNeeded } = require('../utils/imageUtils');
+
 
 /**
  * @desc    Get all projects
@@ -29,8 +29,7 @@ const createProject = async (req, res, next) => {
 
         let image = '';
         if (req.file) {
-            const finalFilename = await convertHeicToJpgIfNeeded(req.file);
-            image = `/uploads/${finalFilename}`;
+            image = req.file.path;
         }
         const project = await Project.create({
             title,
@@ -101,8 +100,7 @@ const updateProject = async (req, res, next) => {
         };
 
         if (req.file) {
-            const finalFilename = await convertHeicToJpgIfNeeded(req.file);
-            updatedFields.image = `/uploads/${finalFilename}`;
+            updatedFields.image = req.file.path;
         }
         const updatedProject = await Project.findByIdAndUpdate(
             req.params.id,

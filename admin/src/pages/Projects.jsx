@@ -103,7 +103,7 @@ const Projects = () => {
                                     <div className="flex items-center">
                                         {project.image && (
                                             <div className="flex-shrink-0 h-12 w-12 mr-4 border border-lightBorder rounded-lg overflow-hidden">
-                                                <img className="h-full w-full object-cover" src={`${BASE_URL}${project.image}`} alt="" />
+                                                <img className="h-full w-full object-cover" src={project.image.startsWith('http') ? project.image : `${BASE_URL}${project.image}`} alt="" />
                                             </div>
                                         )}
                                         <div>

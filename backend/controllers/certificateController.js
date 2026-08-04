@@ -13,7 +13,7 @@ const createCertificate = async (req, res, next) => {
     try {
         const { name, issuer, issueDate, expiryDate, credentialUrl, order } = req.body;
         let image = '';
-        if (req.file) image = `/uploads/${req.file.filename}`;
+        if (req.file) image = req.file.path;
 
         const certificate = await Certificate.create({
             name, issuer, issueDate, expiryDate, credentialUrl, image,
@@ -33,7 +33,7 @@ const updateCertificate = async (req, res, next) => {
             return next(new Error('Certificate not found'));
         }
         const updatedFields = { ...req.body };
-        if (req.file) updatedFields.image = `/uploads/${req.file.filename}`;
+        if (req.file) updatedFields.image = req.file.path;
 
         const updated = await Certificate.findByIdAndUpdate(
             req.params.id,

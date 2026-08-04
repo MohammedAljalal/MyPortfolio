@@ -115,7 +115,7 @@ const Skills = () => {
                                 {skill.icon ? (
                                     <div className="w-10 h-10 md:w-16 md:h-16 p-2 md:p-3 bg-amber-50 dark:bg-slate-800/50 rounded-xl md:rounded-2xl mr-3 md:mr-5 flex flex-shrink-0 items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border border-amber-200/60 dark:border-gray-700/50 backdrop-blur-md shadow-inner overflow-hidden">
                                         <LazyImage 
-                                            src={`${BASE_URL}${skill.icon}`} 
+                                            src={skill.icon.startsWith('http') ? skill.icon : `${BASE_URL}${skill.icon}`} 
                                             alt={`${skill.name} icon`} 
                                             className="w-full h-full object-contain filter drop-shadow-sm" 
                                         />

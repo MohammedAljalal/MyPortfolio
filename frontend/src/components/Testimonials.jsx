@@ -62,7 +62,7 @@ const Testimonials = () => {
                             {testimonial.image ? (
                                 <div className="w-14 h-14 rounded-full overflow-hidden mr-4 border-2 shrink-0" style={{borderColor:'rgba(200,168,107,0.4)'}}>
                                     <LazyImage 
-                                        src={`${BASE_URL}${testimonial.image}`} 
+                                        src={testimonial.image.startsWith('http') ? testimonial.image : `${BASE_URL}${testimonial.image}`} 
                                         alt={testimonial.name} 
                                         className="w-full h-full object-cover"
                                     />

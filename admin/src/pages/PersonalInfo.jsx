@@ -80,7 +80,7 @@ const PersonalInfo = () => {
                     <div className="p-6 md:p-8 border-b border-lightBorder flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 text-center md:text-left bg-amber-50/30">
                         <div className="relative flex-shrink-0">
                             {currentInfo.profileImage ? (
-                                <img src={`${BASE_URL}${currentInfo.profileImage}`} alt="Profile" className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto md:mx-0" />
+                                <img src={currentInfo.profileImage.startsWith('http') ? currentInfo.profileImage : `${BASE_URL}${currentInfo.profileImage}`} alt="Profile" className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto md:mx-0" />
                             ) : (
                                 <FaUserCircle className="w-28 h-28 text-amber-200/50 bg-white rounded-full mx-auto md:mx-0 shadow-sm" />
                             )}
@@ -134,7 +134,7 @@ const PersonalInfo = () => {
                                 </div>
                                 {currentInfo.resumeLink && (
                                     <div className="text-sm">
-                                        <a href={`${BASE_URL}${currentInfo.resumeLink}`} target="_blank" rel="noreferrer" className="text-primary-dark hover:text-primary font-bold whitespace-nowrap transition-colors">View Current Resume</a>
+                                        <a href={currentInfo.resumeLink.startsWith('http') ? currentInfo.resumeLink : `${BASE_URL}${currentInfo.resumeLink}`} target="_blank" rel="noreferrer" className="text-primary-dark hover:text-primary font-bold whitespace-nowrap transition-colors">View Current Resume</a>
                                     </div>
                                 )}
                             </div>
